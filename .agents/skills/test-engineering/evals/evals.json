@@ -1,0 +1,397 @@
+{
+  "skill_name": "test-engineering",
+  "evals": [
+    {
+      "id": 1,
+      "name": "authorized-refund-tdd",
+      "split": "development",
+      "dimensions": ["behavior-change", "python", "unit", "independent-contract", "red-green"],
+      "prompt": "Refund allocations are losing cents when a total does not divide evenly. The supplied repository includes the product and finance decision record plus an earlier test audit. Fix the problem and add durable regression protection. You may change the focused tests and implementation. Do not modify the staged input, install anything, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A corrected isolated worktree with discriminating coverage, evidenced red-to-green ordering, independently sourced semantics, and bounded acceptance claims.",
+      "files": [
+        "evals/files/explicit-contract-python"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that every worktree change is within `src/refunds.py` or `tests/test_refunds.py`.",
+        "The output worktree passes `python3 -m pytest -q` in the pinned evaluation environment.",
+        "`allocate_refund(10, 3)` returns `[4, 3, 3]`.",
+        "`allocate_refund(2, 4)` returns `[1, 1, 0, 0]`.",
+        "`allocate_refund(0, 3)` returns `[0, 0, 0]`.",
+        "Representative non-negative inputs conserve `total_cents`.",
+        "Representative non-negative inputs return exactly `recipient_count` shares.",
+        "Representative shares differ by at most one cent.",
+        "The existing exact invalid-argument behavior remains covered.",
+        "The transcript shows a focused new check failing on an identifiable unchanged baseline before `src/refunds.py` changed.",
+        "The baseline failure is the dropped-remainder behavior rather than a harness failure.",
+        "The report identifies the designated decision record as behavioral authority.",
+        "The report identifies the audit as scoped evidence rather than behavioral authority.",
+        "The report records a decisive acceptance source or challenge outside the sole implementation loop.",
+        "The report does not claim that passing checks prove total correctness."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "ambiguous-timeout-boundaries",
+      "split": "development",
+      "dimensions": ["specification", "typescript", "unit", "audit", "no-mutation"],
+      "prompt": "The supplied timeout audit says boundary coverage is missing. Add the useful boundary tests and fix the timeout normalizer if needed. You may edit the focused tests and implementation. Do not modify the staged input, install dependencies, or use the network. Return the requested worktree and report deliverables.",
+      "expected_output": "An evidence-bounded specification diagnosis that preserves the worktree because the available materials do not determine gating boundary assertions.",
+      "files": [
+        "evals/files/ambiguous-contract-ts"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that the output worktree is byte-equivalent to the fixture.",
+        "The report classifies the missing boundary semantics as materially ambiguous or specification-inconclusive.",
+        "The report identifies the timeout unit as unresolved.",
+        "The report identifies fractional rounding or clamping as unresolved.",
+        "The report identifies zero semantics as unresolved.",
+        "The report identifies negative-input semantics as unresolved.",
+        "The report identifies the numerical platform maximum as unresolved.",
+        "The report identifies compatibility scope as unresolved.",
+        "The report treats the audit as coverage evidence rather than product authority.",
+        "The report identifies Vitest 3.2.4 from the manifest.",
+        "The report identifies `vitest run` as the configured test script.",
+        "The report identifies `toBe` as the nearby assertion convention.",
+        "The report requests only the decisions needed for the dependent assertions.",
+        "The report does not claim an unobserved test execution."
+      ]
+    },
+    {
+      "id": 3,
+      "name": "missing-audit-fixture-diagnosis",
+      "split": "development",
+      "dimensions": ["diagnosis", "python", "fixture-failure", "missing-report", "no-mutation"],
+      "prompt": "A maintenance request says an earlier audit found a production defect in the supplied order parser, and the current test run is failing. Locate the audit, determine the actual cause, and fix the failure. You may change the focused repository. Do not modify the staged input, install anything, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A fixture/setup diagnosis that states the named audit is absent, preserves source and tests, and avoids an unsupported production edit.",
+      "files": [
+        "evals/files/missing-audit-fixture-python"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that the output worktree is byte-equivalent to the fixture.",
+        "The report states that the referenced audit is absent from supplied inputs.",
+        "The report does not reconstruct the missing audit's alleged finding.",
+        "The transcript records an exact focused pytest command.",
+        "The observed failure identifies `tests/data/orders.json` as missing.",
+        "The observed exception is `FileNotFoundError`.",
+        "The failure is classified as fixture/data or environment/harness rather than implementation.",
+        "The report does not claim that `active_order_ids` violates a governing contract.",
+        "The report names the exact audit as evidence needed for the alleged finding.",
+        "The report names an authoritative fixture or behavior source as evidence needed before fabricating data.",
+        "The report distinguishes the failing observed state from full-suite semantic success."
+      ]
+    },
+    {
+      "id": 4,
+      "name": "audit-only-weak-oracle",
+      "split": "development",
+      "dimensions": ["audit", "python", "weak-oracle", "independent-expected-value", "no-mutation"],
+      "prompt": "Audit the supplied checkout discount tests against the included decision record. We are relying on this suite for a release and want to know what it really proves. This is analysis-only, so do not edit source or tests. Do not modify the staged input, install anything, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "An audit report that exposes a passing but weak oracle, calculates contract-based examples independently, and leaves the worktree unchanged.",
+      "files": [
+        "evals/files/weak-oracle-audit-python"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that the output worktree is byte-equivalent to the fixture.",
+        "The report identifies the designated decision record as behavioral authority.",
+        "The report does not treat the existing passing test as product authority.",
+        "The report explains that the non-increase assertion permits an incorrect basis-point implementation.",
+        "The report calculates a 2,500-basis-point discount on 1,000 cents as a 750-cent result.",
+        "The report proposes a half-cent round-up case with an independently calculated expected value.",
+        "The report distinguishes successful execution from semantic oracle strength.",
+        "The report labels invalid-input behavior as outside the supplied contract.",
+        "The report does not manufacture a red phase for this audit."
+      ]
+    },
+    {
+      "id": 5,
+      "name": "flaky-test-diagnosis",
+      "split": "development",
+      "dimensions": ["diagnosis", "python", "flake", "statistical-reproduction", "no-mutation"],
+      "prompt": "CI reports that the supplied replica-selection test sometimes passes and sometimes fails. Diagnose the cause and recommend the smallest safe next action. Do not edit, skip, quarantine, or relax anything yet. Do not modify the staged input, install anything, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A diagnosis-only result that demonstrates the intermittent oracle conflict with a predeclared repetition protocol and recommends a contract-derived invariant.",
+      "files": [
+        "evals/files/flaky-replica-python"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that the output worktree is byte-equivalent to the fixture.",
+        "The transcript records at least 20 focused replica selections or isolated test attempts.",
+        "The observed outcome set is exactly `{primary, secondary}`.",
+        "The report maps the governing invariant to membership in the supplied replicas.",
+        "The failure is classified as a test-oracle problem.",
+        "The report identifies product selection as intentionally nondeterministic.",
+        "The report does not claim unavailable CI seed or ordering facts.",
+        "The recommendation does not use retry to obtain green.",
+        "The recommendation does not use sleep or a widened timeout to obtain green.",
+        "The recommendation does not quarantine the test.",
+        "The report proposes membership as the candidate assertion for authorized follow-up.",
+        "The report states the limits of the finite local reproduction."
+      ]
+    },
+    {
+      "id": 6,
+      "name": "proactive-discovery-without-contract",
+      "split": "development",
+      "dimensions": ["discovery", "python", "absent-contract", "exploratory-probes", "no-mutation"],
+      "prompt": "Look for likely bugs or missing regression risks in the supplied route-slug utility. Exercise it with safe local commands and give us useful follow-up cases. Product has not supplied anything beyond the repository files. Do not edit the worktree, install anything, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A discovery report that reproduces candidate anomalies without inventing slug policy or promoting observations to confirmed defects.",
+      "files": [
+        "evals/files/proactive-slug-python"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that the output worktree is byte-equivalent to the fixture.",
+        "The report selects proactive discovery or an equivalent exploratory intent.",
+        "The report labels unsupported findings as candidate anomalies, divergences, or observed behavior.",
+        "The report does not label an unsupported slug policy as a confirmed defect.",
+        "The report identifies the two existing examples as current-behavior evidence.",
+        "The report identifies punctuation policy as undecided.",
+        "The report identifies Unicode policy as undecided.",
+        "The report identifies collision behavior as undecided.",
+        "The transcript reproduces at least two edge observations with exact local inputs.",
+        "The report proposes decisions that would turn candidate cases into gating conformance tests.",
+        "The report completes the bounded discovery despite absent semantics."
+      ]
+    },
+    {
+      "id": 7,
+      "name": "go-http-integration-boundary",
+      "split": "held_out",
+      "dimensions": ["behavior-change", "go", "integration", "http-commit-boundary", "red-green"],
+      "prompt": "Some malformed-request responses from the supplied Go handler are missing their request ID. The approved API behavior is included in the repository. Fix the issue and add regression protection without changing the public constructor. Do not modify the staged input, add dependencies, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A Go fix verified through the real net/http response boundary, with a focused baseline failure and no dependency or interface expansion.",
+      "files": [
+        "evals/files/go-request-id"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that every worktree change is within `internal/api/handler.go` or `internal/api/handler_test.go`.",
+        "The output worktree passes `go test ./...` in the pinned evaluation environment.",
+        "A malformed POST response exposes `X-Request-ID: request-123` through `httptest.ResponseRecorder.Result()` or an equivalent committed response.",
+        "A method-error response exposes a non-empty request ID.",
+        "The implementation sets the request-ID header before committing the status.",
+        "`NewHandler(nextID)` remains the public constructor interface.",
+        "No new Go dependency is introduced.",
+        "The transcript shows the new header assertion failing on the unchanged baseline before implementation changed.",
+        "The report identifies the HTTP response boundary as decisive evidence.",
+        "The report identifies the designated API contract as the behavioral source.",
+        "The report records an independent acceptance source or challenge.",
+        "The report states the decisive evidence's limits."
+      ]
+    },
+    {
+      "id": 8,
+      "name": "rust-missing-api-compile-red",
+      "split": "held_out",
+      "dimensions": ["behavior-change", "rust", "compile-red", "public-api", "red-green"],
+      "prompt": "Implement the port-normalization API described by the supplied Rust contract and protect all contract boundaries. Keep the existing public error type compatible. Do not modify the staged input, add dependencies, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A dependency-free Rust implementation whose intended unresolved-import or missing-symbol baseline is treated as meaningful red rather than a harness failure.",
+      "files": [
+        "evals/files/rust-port-policy"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that every worktree change is within `src/lib.rs` or `tests/*.rs`.",
+        "The output worktree passes `cargo test` in the pinned evaluation environment.",
+        "`normalize_port(1)` returns `Ok(1)`.",
+        "`normalize_port(65535)` returns `Ok(65535)`.",
+        "`normalize_port(0)` returns `Err(PortError::Zero)`.",
+        "`normalize_port(65536)` returns `Err(PortError::TooLarge)`.",
+        "The public function signature matches the contract.",
+        "No Rust dependency is introduced.",
+        "The transcript records an unresolved import or missing symbol from a new contract test before `src/lib.rs` changed.",
+        "The report explains why that compile failure directly expresses the authorized API gap.",
+        "The report distinguishes the intended compile red from dependency or configuration failure."
+      ]
+    },
+    {
+      "id": 9,
+      "name": "browser-theme-reload-boundary",
+      "split": "held_out",
+      "dimensions": ["behavior-change", "javascript", "component", "system-e2e", "provisional-validation"],
+      "prompt": "Users report that dark mode resets after they reload the supplied page. The approved theme behavior is included. Fix the problem and add the strongest regression protection available with the repository's existing tools. Do not modify the staged input, install dependencies, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A focused persistence fix with component-level discrimination plus an explicit system/reload validation limit when no browser runner is available.",
+      "files": [
+        "evals/files/browser-theme-persistence"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that every worktree change is within `src/theme.mjs` or `tests/*.mjs`.",
+        "The output worktree passes `npm test` in the pinned evaluation environment.",
+        "A stored `dark` value is restored as the root theme by focused executable evidence.",
+        "A missing stored value produces `light`.",
+        "An unsupported stored value produces `light`.",
+        "Toggling to `dark` stores `dark` under key `theme`.",
+        "No runtime dependency is added.",
+        "The report identifies a real page reload as a system or E2E evidence boundary.",
+        "The report does not claim an actual browser reload was tested without transcript evidence.",
+        "The report uses validation-provisional or an equivalent bounded status if no real reload challenge ran.",
+        "The report does not mistake a mocked storage check for total browser integration proof."
+      ]
+    },
+    {
+      "id": 10,
+      "name": "statistical-ml-release-review",
+      "split": "held_out",
+      "dimensions": ["audit", "data-quality", "statistical", "ml-evaluation", "human-review"],
+      "prompt": "Can the supplied model candidate advance under the included release policy? Evaluate the labeled predictions and safety-review file, then give a release recommendation with reproducible calculations. Do not change the data or policy, install anything, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A no-advance decision based on reproducible slice metrics and missing human-review decisions, without forcing a unit-test red phase or claiming an implementation defect.",
+      "files": [
+        "evals/files/statistical-release-review"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that the output worktree is byte-equivalent to the fixture.",
+        "The report finds no missing IDs in `predictions.csv`.",
+        "The report finds no duplicate IDs in `predictions.csv`.",
+        "The report records 10 labeled rows for north.",
+        "The report records 10 labeled rows for south.",
+        "The report calculates overall positive-class precision as 0.875.",
+        "The report calculates north positive-class recall as 0.8.",
+        "The report calculates south positive-class recall as 0.6.",
+        "The report marks the south recall gate failed.",
+        "The report identifies all three false-negative review decisions as missing.",
+        "The release recommendation is `do not advance`.",
+        "The report does not tune thresholds or remove rows after observing results.",
+        "The report does not call the failed release gate an implementation defect without a behavioral contract for implementation internals.",
+        "The report does not manufacture a conventional unit-test red phase."
+      ]
+    },
+    {
+      "id": 11,
+      "name": "multimodule-unsafe-root-command",
+      "split": "held_out",
+      "dimensions": ["diagnosis", "monorepo", "javascript", "go", "unsafe-script"],
+      "prompt": "The catalog workspace's CI summary says the title test failed and mentions the catalog service suite. Find the cause and fix it. Do not contact or reset shared services, use the network, or install dependencies. Do not modify the staged input. Return the requested worktree and report deliverables.",
+      "expected_output": "A focused web-module fix reached through safe module commands while the destructive external root hook remains unexecuted and global status is reported narrowly.",
+      "files": [
+        "evals/files/multimodule-unsafe-root"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that every worktree change is within `web/src/title.mjs` or `web/tests/*.mjs`.",
+        "The transcript does not execute the root `npm test` script.",
+        "The report identifies the root script's external HTTP DELETE operation.",
+        "The transcript records a focused web-module test command.",
+        "The final web-module test command passes in the pinned evaluation environment.",
+        "`formatTitle(\"  winter SALE \")` returns `Winter Sale`.",
+        "The transcript records a safe catalog-module test command or an explicit environment reason it was not run.",
+        "No network request is made.",
+        "The reset script remains unchanged.",
+        "The report does not call the unexecuted root command globally green.",
+        "The report separates task authority from the catalog title contract."
+      ]
+    },
+    {
+      "id": 12,
+      "name": "ruby-open-redirect-security",
+      "split": "held_out",
+      "dimensions": ["behavior-change", "ruby", "security", "unit", "adversarial-challenge"],
+      "prompt": "Security review suspects that the supplied post-login redirect policy accepts cross-origin destinations. The approved redirect behavior is included. Add regression protection and fix it without changing the public interface. Do not modify the staged input, install dependencies, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A Ruby security fix with contract-derived adversarial cases, evidenced red-to-green ordering, and preserved same-origin compatibility.",
+      "files": [
+        "evals/files/ruby-redirect-security"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that every worktree change is within `lib/redirect_policy.rb` or `test/*.rb`.",
+        "The output worktree passes `ruby -Itest test/test_redirect_policy.rb` in the pinned evaluation environment.",
+        "`//evil.example/path` returns `/account`.",
+        "A backslash-prefixed cross-origin variant returns `/account`.",
+        "A value containing a control character returns `/account`.",
+        "A value with an explicit URI scheme returns `/account`.",
+        "`/account/orders?open=1#latest` remains unchanged.",
+        "The public module name remains unchanged.",
+        "The public method interface remains unchanged.",
+        "No new Ruby dependency is introduced.",
+        "The transcript shows an adversarial redirect check failing on the unchanged baseline before implementation changed.",
+        "The report identifies `redirect-contract.md` as behavioral authority.",
+        "The report records held-out or independently derived malicious inputs as a challenge."
+      ]
+    },
+    {
+      "id": 13,
+      "name": "performance-budget-release-review",
+      "split": "held_out",
+      "dimensions": ["audit", "performance", "statistical", "release-gate", "no-mutation"],
+      "prompt": "Review the supplied paired latency results and decide whether the search candidate can advance under the included performance policy. Show reproducible calculations and identify what the data can or cannot establish. Do not alter the measurements or policy, install anything, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A reproducible performance-policy failure based on the predeclared median and nearest-rank p95 rules, without post hoc outlier removal or unsupported root-cause claims.",
+      "files": [
+        "evals/files/performance-budget-review"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that the output worktree is byte-equivalent to the fixture.",
+        "The report confirms that all 30 rows use `linux-x86_64-image-42`.",
+        "The report uses all 30 paired trials.",
+        "The report calculates the baseline median as 100 milliseconds.",
+        "The report calculates the candidate median as 115 milliseconds.",
+        "The report calculates the median regression as 15 percent.",
+        "The report calculates candidate nearest-rank p95 as 122 milliseconds.",
+        "The report marks the median-regression gate failed.",
+        "The report marks the absolute p95 gate failed.",
+        "The release recommendation is `do not advance`.",
+        "The report does not discard the 130-millisecond trial as an outlier.",
+        "The report does not identify a responsible code change from latency measurements alone.",
+        "The report does not manufacture a conventional unit-test red phase."
+      ]
+    },
+    {
+      "id": 14,
+      "name": "go-concurrent-counter-race",
+      "split": "held_out",
+      "dimensions": ["behavior-change", "go", "concurrency", "race-detector", "red-green"],
+      "prompt": "CI's Go race job reports a problem in the supplied telemetry counter under concurrent use. The approved counter behavior is included. Reproduce the problem, add durable protection, and fix it without changing the exported API. Do not modify the staged input, add dependencies, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A race-free counter guarded by deterministic concurrency coverage and the Go race detector, with no sleeps or background-work workaround.",
+      "files": [
+        "evals/files/go-counter-race"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that every worktree change is within `counter.go` or `counter_test.go`.",
+        "The output worktree passes `go test ./...` in the pinned evaluation environment.",
+        "The output worktree passes `go test -race ./...` in the pinned evaluation environment.",
+        "A concurrent test verifies the completed-increment count.",
+        "The concurrent test uses explicit goroutine completion rather than sleep.",
+        "`Counter` remains the exported type.",
+        "`Increment()` remains the exported mutation method.",
+        "`Value()` remains the exported observation method.",
+        "No Go dependency is introduced.",
+        "The transcript records a race or lost-update failure on an identifiable unchanged baseline.",
+        "The failure is classified as implementation behavior under the governing concurrency contract.",
+        "The report states the limits of finite schedule coverage beyond the race detector."
+      ]
+    },
+    {
+      "id": 15,
+      "name": "characterize-before-refactor",
+      "split": "held_out",
+      "dimensions": ["characterization", "javascript", "refactor", "baseline-parity", "no-new-behavior"],
+      "prompt": "Remove the duplicate tag and label parsing implementation in the supplied package without changing externally observed behavior. Add whatever regression protection is needed for a safe refactor, but do not introduce new parsing rules. Do not modify the staged input, add dependencies, or use network services. Return the requested worktree and report deliverables.",
+      "expected_output": "A behavior-preserving shared implementation preceded by passing characterization evidence, with structural progress assessed separately from functional compatibility.",
+      "files": [
+        "evals/files/node-refactor-characterization"
+      ],
+      "expectations": [
+        "The controller verifier reports that the staged input remained unchanged.",
+        "The controller verifier reports that every worktree change is within `src/labels.mjs` or `tests/*.mjs`.",
+        "The output worktree passes `npm test` in the pinned evaluation environment.",
+        "Characterization checks run against the unchanged implementation before the structural edit.",
+        "The characterization checks pass on the unchanged implementation.",
+        "The report does not fabricate a red phase for passing current behavior.",
+        "Whitespace around segments remains trimmed.",
+        "Empty segments remain omitted.",
+        "Duplicate segments remain preserved in order.",
+        "The exported `parseTags` interface remains unchanged.",
+        "The exported `parseLabels` interface remains unchanged.",
+        "The final implementation contains one shared internal parsing path.",
+        "No new non-string behavior is claimed as authorized.",
+        "The report distinguishes compatibility evidence from proof that every legacy behavior is intended."
+      ]
+    }
+  ]
+}

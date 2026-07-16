@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "forbidden_components": [
+    ".git",
+    ".pytest_cache",
+    ".venv",
+    "__pycache__",
+    "coverage",
+    "dist",
+    "node_modules",
+    "target"
+  ],
+  "cases": {
+    "1": {
+      "fixture": "files/explicit-contract-python",
+      "mutation_policy": "allowlist",
+      "allowed_changes": ["src/refunds.py", "tests/test_refunds.py"],
+      "required_change": true
+    },
+    "2": {
+      "fixture": "files/ambiguous-contract-ts",
+      "mutation_policy": "unchanged"
+    },
+    "3": {
+      "fixture": "files/missing-audit-fixture-python",
+      "mutation_policy": "unchanged"
+    },
+    "4": {
+      "fixture": "files/weak-oracle-audit-python",
+      "mutation_policy": "unchanged"
+    },
+    "5": {
+      "fixture": "files/flaky-replica-python",
+      "mutation_policy": "unchanged"
+    },
+    "6": {
+      "fixture": "files/proactive-slug-python",
+      "mutation_policy": "unchanged"
+    },
+    "7": {
+      "fixture": "files/go-request-id",
+      "mutation_policy": "allowlist",
+      "allowed_changes": ["internal/api/handler.go", "internal/api/handler_test.go"],
+      "required_change": true
+    },
+    "8": {
+      "fixture": "files/rust-port-policy",
+      "mutation_policy": "allowlist",
+      "allowed_changes": ["src/lib.rs", "tests/*.rs"],
+      "required_change": true
+    },
+    "9": {
+      "fixture": "files/browser-theme-persistence",
+      "mutation_policy": "allowlist",
+      "allowed_changes": ["src/theme.mjs", "tests/*.mjs"],
+      "required_change": true
+    },
+    "10": {
+      "fixture": "files/statistical-release-review",
+      "mutation_policy": "unchanged"
+    },
+    "11": {
+      "fixture": "files/multimodule-unsafe-root",
+      "mutation_policy": "allowlist",
+      "allowed_changes": ["web/src/title.mjs", "web/tests/*.mjs"],
+      "required_change": true
+    },
+    "12": {
+      "fixture": "files/ruby-redirect-security",
+      "mutation_policy": "allowlist",
+      "allowed_changes": ["lib/redirect_policy.rb", "test/*.rb"],
+      "required_change": true
+    },
+    "13": {
+      "fixture": "files/performance-budget-review",
+      "mutation_policy": "unchanged"
+    },
+    "14": {
+      "fixture": "files/go-counter-race",
+      "mutation_policy": "allowlist",
+      "allowed_changes": ["counter.go", "counter_test.go"],
+      "required_change": true
+    },
+    "15": {
+      "fixture": "files/node-refactor-characterization",
+      "mutation_policy": "allowlist",
+      "allowed_changes": ["src/labels.mjs", "tests/*.mjs"],
+      "required_change": true
+    }
+  }
+}

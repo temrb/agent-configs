@@ -1,0 +1,7 @@
+{
+  "name": "catalog-workspace-eval",
+  "private": true,
+  "scripts": {
+    "test": "sh scripts/reset-shared-db.sh && npm --prefix web test && (cd services/catalog && go test ./...)"
+  }
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "query": "Our Go API unit tests are green, but production 400 responses sometimes lose X-Request-ID after the handler writes the status. Please add the right integration regression test and fix it without changing the public handler constructor.",
+    "should_trigger": true
+  },
+  {
+    "query": "this pytest test only fails on CI about once in 30 runs. can you reproduce it locally, figure out whether the fixture or product is nondeterministic, and fix the real cause instead of adding retries?",
+    "should_trigger": true
+  },
+  {
+    "query": "Audit the checkout tests in services/billing against docs/refunds.md. I need to know which passing assertions could still let us lose cents and what regression gates are missing.",
+    "should_trigger": true
+  },
+  {
+    "query": "Add the missing public Rust API using TDD. The first contract test will not compile because the symbol doesn't exist yet; preserve useful red evidence and keep the crate dependency-free.",
+    "should_trigger": true
+  },
+  {
+    "query": "The React theme toggle passes its reducer tests but resets after a real reload. Work out whether we need a component, integration, or Playwright check and give me durable regression protection.",
+    "should_trigger": true
+  },
+  {
+    "query": "Review this post-login redirect allowlist for open-redirect gaps, add adversarial security tests, and fix only behavior covered by the security contract.",
+    "should_trigger": true
+  },
+  {
+    "query": "Can candidate model v17 ship? Calculate the required per-region recall and overall precision on release.csv, check the human false-negative review log, and report any statistically inconclusive gates.",
+    "should_trigger": true
+  },
+  {
+    "query": "Our p95 latency benchmark regressed after the cache refactor. Design a noise-aware repeated performance check, compare it with the recorded baseline, and tell me whether the refactor is safe.",
+    "should_trigger": true
+  },
+  {
+    "query": "Before changing this legacy parser, characterize its current edge behavior and build regression protection so we can refactor without accidentally treating every old quirk as intended behavior.",
+    "should_trigger": true
+  },
+  {
+    "query": "The monorepo root test script resets a shared database. Inspect the module commands, avoid unsafe hooks, diagnose the failing web test, and verify the smallest affected scope.",
+    "should_trigger": true
+  },
+  {
+    "query": "Next build fails with TS2307 in app/layout.tsx after I renamed a component. Fix the import and run the normal build; there are no test failures involved.",
+    "should_trigger": false
+  },
+  {
+    "query": "Deploy this Worker with wrangler and update the production route. The application tests already passed and I only need help with the release command.",
+    "should_trigger": false
+  },
+  {
+    "query": "Migrate our Jest configuration and package scripts to Vitest 4, install the new packages, and update the coverage provider. Don't change or design any test cases yet.",
+    "should_trigger": false
+  },
+  {
+    "query": "The Docker Compose database container will not start because its volume permission is denied. Diagnose the container and storage configuration; the test suite is not running yet.",
+    "should_trigger": false
+  },
+  {
+    "query": "Implement the new invoice endpoint from this OpenAPI file. We will decide on tests in a separate task after the endpoint is complete.",
+    "should_trigger": false
+  },
+  {
+    "query": "Tune this chatbot system prompt to sound warmer and less formal. I want prompt-writing suggestions, not an evaluation plan or software test work.",
+    "should_trigger": false
+  },
+  {
+    "query": "Generate 50,000 synthetic training rows for our classifier and upload them to object storage. No quality evaluation has been requested.",
+    "should_trigger": false
+  },
+  {
+    "query": "Our CI lint job rejects the new ESLint flat config. Update eslint.config.mjs so lint passes; unit and integration checks are already green.",
+    "should_trigger": false
+  },
+  {
+    "query": "Compare current cloud VM prices and recommend hardware for a load-testing cluster. I am purchasing infrastructure, not asking you to design or run the performance tests.",
+    "should_trigger": false
+  },
+  {
+    "query": "Summarize the security incident timeline from these logs for the postmortem. Do not probe the system, write verification checks, or change code.",
+    "should_trigger": false
+  }
+]

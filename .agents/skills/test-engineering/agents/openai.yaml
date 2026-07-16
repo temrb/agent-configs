@@ -1,0 +1,7 @@
+interface:
+  display_name: "Test Engineering"
+  short_description: "Stack-neutral, independently validated testing"
+  default_prompt: "Use $test-engineering to select the right test-engineering mode and evidence boundary, then complete the authorized work with independent acceptance evidence and explicit limits."
+
+policy:
+  allow_implicit_invocation: true
