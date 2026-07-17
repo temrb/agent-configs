@@ -1,0 +1,6 @@
+interface:
+  display_name: "Skill Manager"
+  short_description: "Create, review, validate, and maintain agent skills"
+  default_prompt: "Inspect the target skill first, determine the requested lifecycle operation, preserve platform-specific requirements, and make only the requested safe changes."
+policy:
+  allow_implicit_invocation: true
