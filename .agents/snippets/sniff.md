@@ -77,8 +77,10 @@ Do NOT describe the correction.
 
 ---
 
-# Bug Logs
+# Logs
 
-<BUG_LOGS>
+<LOGS>
+
 {clipboard}
-</BUG_LOGS>
+
+</LOGS>
