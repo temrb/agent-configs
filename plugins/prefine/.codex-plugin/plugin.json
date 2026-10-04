@@ -1,0 +1,25 @@
+{
+  "interface": {
+    "displayName": "Prefine",
+    "shortDescription": "Refine prompts precisely",
+    "longDescription": "Transform rough, incomplete, ambiguous, or conversational requests into clear, effective prompts. Prefine preserves the user's intended scope, uses relevant available context, and can adapt to current official OpenAI prompting guidance for a specified target model. It returns only the refined instructional prompt and never executes the prompt's underlying task.",
+    "developerName": "Plugin owner",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Refine this prompt without expanding its scope.",
+      "Expand this prompt with useful requirements and acceptance criteria.",
+      "Optimize this prompt for a specific OpenAI model."
+    ]
+  },
+  "name": "prefine",
+  "version": "0.1.1",
+  "description": "A prompt compiler and enhancer that turns rough requests into lean, effective prompts without executing the underlying task.",
+  "author": {
+    "name": "Plugin owner"
+  },
+  "keywords": [],
+  "skills": "./skills"
+}
