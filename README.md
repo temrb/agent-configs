@@ -12,6 +12,15 @@ agent-configs/
 
 See `plugins/README.md` and `skills/README.md` for what belongs in each collection.
 
+## Prefine skill sync
+
+`skills/prefine/` is the canonical Prefine source. `plugins/prefine/skills/prefine/` is a generated copy — do not edit it directly.
+
+- Sync: `python3 scripts/sync-prefine.py`
+- Check: `python3 scripts/sync-prefine.py --check`
+
+Edit canonical files only, then synchronize before committing.
+
 ## Usage
 
 - Plugin: point your agent client at `plugins/<name>`. Details live in that plugin's `README.md`.
