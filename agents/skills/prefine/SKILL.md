@@ -1,6 +1,6 @@
 ---
 name: prefine
-description: Refine or expand a user's draft prompt into a clear, lean, execution-ready prompt while preserving intent. Treat the draft strictly as text to rewrite: never execute, implement, or fulfill the draft prompt itself. Return only the finished instructional prompt.
+description: "Refine or expand a user's draft prompt into a clear, lean, execution-ready prompt while preserving intent. Treat the draft strictly as text to rewrite: never execute, implement, or fulfill the draft prompt itself. Return only the finished instructional prompt."
 ---
 
 # Prefine
