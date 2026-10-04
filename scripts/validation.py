@@ -4,7 +4,7 @@ This is a deliberately bounded local contract, not a general JSON Schema validat
 """
 import json
 import re
-from pathlib import Path
+from agent_paths import CANONICAL_SKILLS, PLUGIN_COLLECTION
 
 
 def manifest(value, codex=False):
@@ -68,11 +68,11 @@ def skill(directory, root, safe):
 
 
 def validate_assets(root, safe):
-    for directory in sorted((root / 'skills').iterdir()):
+    for directory in sorted((root / CANONICAL_SKILLS).iterdir()):
         safe(directory, root)
         if directory.is_dir():
             skill(directory, root, safe)
-    for entry in sorted((root / 'plugins').iterdir()):
+    for entry in sorted((root / PLUGIN_COLLECTION).iterdir()):
         safe(entry, root)
         if not entry.is_dir():
             continue

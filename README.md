@@ -6,16 +6,23 @@ Personal agent configs — plugins, skills, snippets, etc. The filesystem is the
 
 ```text
 agent-configs/
-  plugins/<name>/README.md + plugin.json + skills/<name>/SKILL.md
-  skills/<name>/SKILL.md
+  agents/
+    plugins/<name>/README.md + plugin.json + skills/<name>/SKILL.md
+    skills/<name>/SKILL.md
+  scripts/
+  tests/
+  .github/
+  repo-build.json
+  README.md
+  LICENSE
 ```
 
-See `plugins/README.md` and `skills/README.md` for what belongs in each collection.
+See `agents/plugins/README.md` and `agents/skills/README.md` for what belongs in each collection.
 
 ## Repository generation
 
-Canonical skills live in `skills/<name>/`. Plugin metadata stays canonical in
-`plugins/<name>/plugin.json`. Generated skill trees and Codex manifests are
+Canonical skills live in `agents/skills/<name>/`. Plugin metadata stays canonical in
+`agents/plugins/<name>/plugin.json`. Generated skill trees and Codex manifests are
 committed, so each plugin installs independently without a build step.
 Edit canonical inputs, then run:
 
@@ -32,7 +39,9 @@ changed, extra, and obsolete content. Invalid configuration or drift fails the
 check. The shared validation workflow runs tooling tests, asset validation, and the
 generated-content check as separate checks.
 
-`repo-build.json` lists collection directories. Each collection's immediate
+`repo-build.json` registers `agents/plugins`; collection paths are relative to
+the repository root. `scripts/agent_paths.py` defines the shared plugin and
+canonical skill locations for asset and reserved manifest discovery. Each collection's immediate
 entry directories may contain a version-1 `build.json` recipe. Prefine declares:
 
 ```json
@@ -99,15 +108,15 @@ coverage for a new renderer to the shared standard-library test suite.
 
 ## Usage
 
-- Plugin: point your agent client at `plugins/<name>`. Details live in that plugin's `README.md`.
-- Skill: point your agent client at the skill directory (`plugins/<name>/skills/<skill-name>` or `skills/<name>`). The colocated `SKILL.md` is the definition and the doc.
+- Plugin: point your agent client at `agents/plugins/<name>`. Details live in that plugin's `README.md`.
+- Skill: point your agent client at the skill directory (`agents/plugins/<name>/skills/<skill-name>` or `agents/skills/<name>`). The colocated `SKILL.md` is the definition and the doc.
 
 ## Adding
 
 Copy an existing entry as a template and write colocated docs — no root edits:
 
-- New plugin: copy the `plugins/<name>/` shape, fill in `plugin.json`, that plugin's `README.md`, canonical skills, and `build.json` as described above.
-- New standalone skill: add `skills/<name>/SKILL.md`.
+- New plugin: copy the `agents/plugins/<name>/` shape, fill in `plugin.json`, that plugin's `README.md`, canonical skills, and `build.json` as described above.
+- New standalone skill: add `agents/skills/<name>/SKILL.md`.
 
 ## Asset validation and retirement
 
