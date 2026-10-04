@@ -22,12 +22,13 @@ class RepoTests(unittest.TestCase):
         shutil.copy2(REPO_ROOT / "scripts/repo.py", self.script)
         shutil.copy2(REPO_ROOT / "scripts/generators.py", self.script.parent / "generators.py")
         shutil.copy2(REPO_ROOT / "scripts/validation.py", self.script.parent / "validation.py")
-        self.write_json(self.repo / "repo-build.json", {"version": 1, "collections": ["plugins"]})
-        self.source = self.repo / "skills/prefine"
-        self.destination = self.repo / "plugins/prefine/skills/prefine"
+        shutil.copy2(REPO_ROOT / "scripts/agent_paths.py", self.script.parent / "agent_paths.py")
+        self.write_json(self.repo / "repo-build.json", {"version": 1, "collections": ["agents/plugins"]})
+        self.source = self.repo / "agents/skills/prefine"
+        self.destination = self.repo / "agents/plugins/prefine/skills/prefine"
         self.source.mkdir(parents=True)
         self.destination.parent.mkdir(parents=True)
-        self.recipe = self.repo / "plugins/prefine/build.json"
+        self.recipe = self.repo / "agents/plugins/prefine/build.json"
         self.write_json(self.recipe, {"version": 1, "steps": [{"generator": "copy-tree", "source": "../../skills/prefine", "output": "skills/prefine"}]})
         (self.source / "SKILL.md").write_bytes(b"---\nname: prefine\n---\n")
         (self.source / "references/nested").mkdir(parents=True)
@@ -182,8 +183,8 @@ class RepoTests(unittest.TestCase):
                     fifo.unlink()
 
     def test_multiple_collections_shared_sources_and_multiple_skills(self):
-        self.write_json(self.repo / "repo-build.json", {"version": 1, "collections": ["plugins", "bundles"]})
-        self.write_json(self.repo / "bundles/second/build.json", {"version": 1, "steps": [
+        self.write_json(self.repo / "repo-build.json", {"version": 1, "collections": ["agents/plugins", "agents/bundles"]})
+        self.write_json(self.repo / "agents/bundles/second/build.json", {"version": 1, "steps": [
             {"generator": "copy-tree", "source": "../../skills/prefine", "output": "skills/one"},
             {"generator": "copy-tree", "source": "../../skills/prefine", "output": "skills/two"},
         ]})
@@ -193,7 +194,7 @@ class RepoTests(unittest.TestCase):
         self.assertEqual(before, self.snapshot(self.repo))
         self.run_cli(check=True)
         for name in ("one", "two"):
-            self.assertEqual(self.snapshot(self.source), self.snapshot(self.repo / "bundles/second/skills" / name))
+            self.assertEqual(self.snapshot(self.source), self.snapshot(self.repo / "agents/bundles/second/skills" / name))
 
     def test_manifest_defaults_and_metadata_propagation(self):
         import json
@@ -214,8 +215,8 @@ class RepoTests(unittest.TestCase):
         import sys
         sys.path.insert(0, str(REPO_ROOT / "scripts"))
         from generators import codex_manifest
-        content = codex_manifest(REPO_ROOT / "plugins/prefine/plugin.json", None)
-        self.assertEqual(content[""][0], (REPO_ROOT / "plugins/prefine/.codex-plugin/plugin.json").read_bytes())
+        content = codex_manifest(REPO_ROOT / "agents/plugins/prefine/plugin.json", None)
+        self.assertEqual(content[""][0], (REPO_ROOT / "agents/plugins/prefine/.codex-plugin/plugin.json").read_bytes())
 
     def test_removed_step_or_recipe_cleans_only_owned_output(self):
         self.run_cli()
@@ -236,7 +237,7 @@ class RepoTests(unittest.TestCase):
         invalid = [
             {"version": 2, "steps": [valid]},
             {"version": 1, "steps": [dict(valid, generator="unknown")]},
-            {"version": 1, "steps": [dict(valid, source="../../../outside")]},
+            {"version": 1, "steps": [dict(valid, source="../../../../outside")]},
             {"version": 1, "steps": [dict(valid, output="../escape")]},
             {"version": 1, "steps": [valid, dict(valid, output="skills/prefine/nested")]},
             {"version": 1, "steps": [dict(valid, source="skills/prefine")]},
@@ -245,7 +246,7 @@ class RepoTests(unittest.TestCase):
         self.destination.mkdir()
         for recipe in invalid:
             with self.subTest(recipe=recipe):
-                self.write_json(self.repo / "plugins/z-invalid/build.json", recipe)
+                self.write_json(self.repo / "agents/plugins/z-invalid/build.json", recipe)
                 self.assert_rejected_without_writes()
 
     def test_executable_permissions_are_copied_and_checked(self):
@@ -328,7 +329,7 @@ class RepoTests(unittest.TestCase):
         git("clone", "-q", str(self.repo), str(checkout))
         result = subprocess.run(["python3", str(checkout / "scripts/repo.py"), "sync", "--check"], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertTrue((checkout / "plugins/prefine/skills/prefine/scripts/empty/.gitkeep").exists())
+        self.assertTrue((checkout / "agents/plugins/prefine/skills/prefine/scripts/empty/.gitkeep").exists())
 
     def test_deregistered_inventory_is_rejected(self):
         self.run_cli()
@@ -338,7 +339,61 @@ class RepoTests(unittest.TestCase):
     def test_orphan_codex_directory_is_rejected(self):
         self.write_json(self.recipe.parent / ".codex-plugin/plugin.json", {})
         self.recipe.unlink()
+        self.assertIn("generated manifest without ownership inventory", self.run_cli(check=True, succeeds=False))
+
+    def test_reserved_manifest_rejects_unowned_extra_content(self):
+        self.write_json(self.recipe, {"version": 1, "steps": [
+            {"generator": "codex-manifest", "source": "plugin.json", "output": ".codex-plugin/plugin.json"},
+        ]})
+        self.write_json(self.recipe.parent / "plugin.json", {
+            "name": "prefine", "version": "1.0.0", "description": "Refine",
+            "author": {"name": "Owner"},
+        })
+        self.run_cli()
+        (self.recipe.parent / ".codex-plugin/extra.txt").write_text("unowned")
+        self.assertIn("unexpected generated content without ownership", self.run_cli(check=True, succeeds=False))
+
+    def test_source_boundary_remains_repository_root(self):
+        (self.repo / "shared").mkdir()
+        (self.repo / "shared/data.txt").write_text("repository source")
+        self.write_json(self.recipe, {"version": 1, "steps": [
+            {"generator": "copy-tree", "source": "../../../shared", "output": "shared"},
+        ]})
+        self.run_cli()
+        self.run_cli(check=True)
+        self.assertEqual((self.recipe.parent / "shared/data.txt").read_text(), "repository source")
+        (self.outside / "outside").mkdir()
+        (self.outside / "outside/data.txt").write_text("outside source")
+        self.write_json(self.recipe, {"version": 1, "steps": [
+            {"generator": "copy-tree", "source": "../../../../outside", "output": "shared"},
+        ]})
         self.assert_rejected_without_writes()
+
+    def test_validation_discovers_canonical_and_bundled_skills_without_recipe(self):
+        self.recipe.unlink()
+        self.sibling.unlink()
+        self.sibling.parent.rmdir()
+        valid = "---\nname: prefine\ndescription: Refine prompts\n---\nInstructions.\n"
+        (self.source / "SKILL.md").write_text(valid)
+        shutil.copytree(self.source, self.destination)
+        (self.recipe.parent / "README.md").write_text("Plugin documentation")
+        self.write_json(self.recipe.parent / "plugin.json", {
+            "name": "prefine", "version": "1.0.0", "description": "Refine",
+            "author": {"name": "Owner"},
+        })
+        def validate():
+            return subprocess.run(["python3", "-B", str(self.script), "validate"],
+                                  cwd=self.outside, capture_output=True, text=True)
+        result = validate()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        for directory in (self.source, self.destination):
+            with self.subTest(directory=directory):
+                (directory / "SKILL.md").write_text("invalid")
+                result = validate()
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(str(directory / "SKILL.md"), result.stderr)
+                (directory / "SKILL.md").write_text(valid)
+        self.assertFalse((self.recipe.parent / ".generated.json").exists())
 
     def test_inventory_input_is_rejected(self):
         self.run_cli()
@@ -442,12 +497,12 @@ class RepoTests(unittest.TestCase):
 
     def test_plugin_copy_is_portable_without_canonical_source(self):
         portable = self.outside / "portable"
-        shutil.copytree(REPO_ROOT / "plugins/prefine", portable)
+        shutil.copytree(REPO_ROOT / "agents/plugins/prefine", portable)
         self.assertFalse((portable / "skills").is_symlink())
         self.assertFalse(any(path.is_symlink() for path in portable.rglob("*")))
         self.assertEqual(
             (portable / "skills/prefine/SKILL.md").read_bytes(),
-            (REPO_ROOT / "skills/prefine/SKILL.md").read_bytes(),
+            (REPO_ROOT / "agents/skills/prefine/SKILL.md").read_bytes(),
         )
         self.assertTrue((portable / "plugin.json").is_file())
         self.assertTrue((portable / ".codex-plugin/plugin.json").is_file())

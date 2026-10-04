@@ -14,6 +14,7 @@ import tempfile
 
 sys.dont_write_bytecode = True
 from generators import GENERATORS
+from agent_paths import reserved_manifests
 
 ROOT = Path(__file__).resolve().parent.parent
 INVENTORY = ".generated.json"
@@ -144,7 +145,7 @@ def prepare(adopt=False):
             continue
         if marker.parent not in entries:
             raise ValueError(f"inventory outside registered entries: {marker}")
-    for marker in ROOT.glob("plugins/*/.codex-plugin"):
+    for marker in reserved_manifests(ROOT):
         if not (marker.parent / INVENTORY).exists():
             raise ValueError(f"generated manifest without ownership inventory: {marker}")
     jobs, sources, owned = [], [], []
@@ -225,7 +226,7 @@ def prepare(adopt=False):
         owned.extend(minimal)
         desired[inventory] = {"": (encoded({"version": 1, "outputs": sorted(p.relative_to(entry).as_posix() for p in new)}), 0o644)}
         jobs.extend(desired.items())
-    for directory in ROOT.glob("plugins/*/.codex-plugin"):
+    for directory in reserved_manifests(ROOT):
         for rel, data in scan(directory).items():
             target = directory / rel
             if any(target == output or target.is_relative_to(output) for output in owned):

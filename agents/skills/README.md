@@ -5,7 +5,7 @@ Each subdirectory is one standalone canonical skill. Expected shape:
 
 Plugins bundle committed copies of canonical skills through declarative recipes.
 Edit canonical files and synchronize before committing. See the
-[repository generation workflow](../README.md#repository-generation).
+[repository generation workflow](../../README.md#repository-generation).
 Installation of a generated plugin requires no build step.
 
 Validation requires a directory-matching name and nonempty description in
