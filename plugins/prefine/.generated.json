@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "outputs": [
+    ".codex-plugin/plugin.json",
+    "skills/prefine"
+  ]
+}

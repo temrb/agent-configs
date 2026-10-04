@@ -1,0 +1,24 @@
+name: Validate repository
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      # Add future repository checks here instead of creating a workflow per skill.
+      - name: Test repository tooling
+        run: python3 -B -m unittest discover -s tests
+      - name: Validate canonical and bundled assets
+        run: python3 -B scripts/repo.py validate
+      - name: Check generated repository content
+        run: python3 -B scripts/repo.py sync --check

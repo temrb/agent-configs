@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "generator": "copy-tree",
+      "source": "../../skills/prefine",
+      "output": "skills/prefine"
+    },
+    {
+      "generator": "codex-manifest",
+      "source": "plugin.json",
+      "output": ".codex-plugin/plugin.json"
+    }
+  ]
+}
