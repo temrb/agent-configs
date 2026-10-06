@@ -1,28 +1,27 @@
 {
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "prefine",
-  "version": "0.1.1",
-  "description": "A prompt compiler and enhancer that turns rough requests into lean, effective prompts without executing the underlying task.",
-  "author": {
-    "name": "Plugin owner"
-  },
-  "extensions": {
-    "com.openai": {
-      "interface": {
-        "displayName": "Prefine",
-        "shortDescription": "Refine prompts precisely",
-        "longDescription": "Transform rough, incomplete, ambiguous, or conversational requests into clear, effective prompts. Prefine preserves the user's intended scope, uses relevant available context, and can adapt to current official OpenAI prompting guidance for a specified target model. It returns only the refined instructional prompt and never executes the prompt's underlying task.",
-        "developerName": "Plugin owner",
-        "category": "Productivity",
-        "capabilities": [
-          "Interactive"
-        ],
-        "defaultPrompt": [
-          "Refine this prompt without expanding its scope.",
-          "Expand this prompt with useful requirements and acceptance criteria.",
-          "Optimize this prompt for a specific OpenAI model."
-        ]
-      }
-    }
-  }
+	"$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+	"name": "prefine",
+	"version": "0.1.1",
+	"description": "An interactive prompt compiler that refines or explicitly expands draft prompts for OpenAI, Claude, or model-neutral targets without executing the underlying task.",
+	"author": {
+		"name": "Plugin owner"
+	},
+	"extensions": {
+		"com.openai": {
+			"interface": {
+				"displayName": "Prefine",
+				"shortDescription": "Compile prompts for the right model",
+				"longDescription": "Turn rough, incomplete, ambiguous, or conversational drafts into lean, effective instructional prompts without executing the underlying task. Prefine first asks for the target provider or model family, then the model or refinement target. It supports OpenAI, Anthropic / Claude, other providers, and model-neutral prompts; resolves current official prompting guidance when applicable; preserves scope in Refine mode; and adds useful requirements or acceptance criteria only when Expand is explicitly selected. The final output is only the compiled prompt, ready for another model or agent to execute.",
+				"developerName": "Plugin owner",
+				"category": "Productivity",
+				"capabilities": ["Interactive"],
+				"defaultPrompt": [
+					"Refine this draft prompt while preserving its intended scope.",
+					"Expand this draft prompt with useful requirements and acceptance criteria.",
+					"Optimize this draft prompt for a specific provider and model.",
+					"Make this draft prompt model-neutral."
+				]
+			}
+		}
+	}
 }
