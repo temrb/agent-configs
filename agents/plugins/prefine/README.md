@@ -28,15 +28,19 @@ standalone copy for a single skill. Avoid installing both.
 Prefine uses an explicit two-turn configuration before transforming a draft:
 
 1. Select the provider or parent model family: OpenAI, Anthropic / Claude, or
-   another provider or family.
-2. Select the model or refinement target offered for that provider, choose
-   Model-neutral / Auto, or enter another model or target manually.
+   another provider or family (`C <provider>`).
+2. For OpenAI or Anthropic / Claude, select a lettered model or
+   Model-neutral / Auto (no free-text entry). For Other, select an offered
+   model or refinement target, Model-neutral / Auto, or type another via
+   Other.
 
 Prefine then compiles the draft using the selected configuration. **Refine** is
 the default mode and preserves the intended scope while improving clarity,
 precision, organization, and compatibility. **Expand** is used only when
-explicitly selected or requested and may add useful requirements, edge cases,
-acceptance criteria, workflow guidance, or output constraints.
+explicitly requested in the user's directions to Prefine or selected as the
+Turn 2 target (never inferred from draft wording or model selection) and may
+add useful requirements, edge cases, acceptance criteria, workflow guidance,
+or output constraints.
 
 For a concrete provider and model, Prefine consults current official prompting
 documentation when available and applies only guidance relevant to that model,
