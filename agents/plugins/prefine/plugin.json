@@ -1,8 +1,8 @@
 {
 	"$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
 	"name": "prefine",
-	"version": "0.1.1",
-	"description": "An interactive prompt compiler that refines or explicitly expands draft prompts for OpenAI, Claude, or model-neutral targets without executing the underlying task.",
+	"version": "0.2.0",
+	"description": "A prompt compiler with a default OpenAI target that refines or explicitly expands draft prompts without executing the underlying task.",
 	"author": {
 		"name": "Plugin owner"
 	},
@@ -11,15 +11,14 @@
 			"interface": {
 				"displayName": "Prefine",
 				"shortDescription": "Compile prompts for the right model",
-				"longDescription": "Turn rough, incomplete, ambiguous, or conversational drafts into lean, effective instructional prompts without executing the underlying task. Prefine first asks for the target provider or model family, then the model or refinement target. It supports OpenAI, Anthropic / Claude, other providers, and model-neutral prompts; resolves current official prompting guidance when applicable; preserves scope in Refine mode; and adds useful requirements or acceptance criteria only when Expand is explicitly selected. The final output is only the compiled prompt, ready for another model or agent to execute.",
+				"longDescription": "Turn rough drafts into lean instructional prompts without executing the underlying task. Uses the default OpenAI target unless explicitly overridden via 'target model: <name>'. Supports OpenAI, Anthropic / Claude, other providers, and model-neutral prompts; resolves current official prompting guidance when applicable; preserves scope in Refine mode and adds requirements only when Expand is explicitly requested. The final output is only the compiled prompt.",
 				"developerName": "Plugin owner",
 				"category": "Productivity",
-				"capabilities": ["Interactive"],
+				"capabilities": [],
 				"defaultPrompt": [
-					"Refine this draft prompt while preserving its intended scope.",
-					"Expand this draft prompt with useful requirements and acceptance criteria.",
-					"Optimize this draft prompt for a specific provider and model.",
-					"Make this draft prompt model-neutral."
+					"Refine this draft prompt (default: OpenAI GPT 6.1 Sol).",
+					"Refine this draft for target model: <model>.",
+					"Expand this draft with requirements (default target)."
 				]
 			}
 		}

@@ -1,6 +1,8 @@
 # prefine
 
-An interactive prompt compiler that turns rough requests into lean, effective prompts for OpenAI, Anthropic / Claude, other providers, or model-neutral use without executing the underlying task.
+A prompt compiler with default target that turns rough requests into lean, effective prompts for OpenAI, Anthropic / Claude, other providers, or model-neutral use without executing the underlying task.
+
+Default: provider=OpenAI, model=GPT 6.1 Sol via OpenAI adapter.
 
 ## Contents
 
@@ -25,18 +27,12 @@ the local source and reinstall/update the cached plugin, then start a new chat.
 Choose the plugin for release metadata and bundled distribution, or the
 standalone copy for a single skill. Avoid installing both.
 
-Prefine uses an explicit two-turn configuration before transforming a draft:
+Prefine compiles single-turn against the default target unless explicitly overridden:
 
-1. Select the provider or parent model family: OpenAI, Anthropic / Claude, or
-   another provider or family.
-2. Select the model or refinement target offered for that provider, choose
-   Model-neutral / Auto, or enter another model or target manually.
-
-Prefine then compiles the draft using the selected configuration. **Refine** is
-the default mode and preserves the intended scope while improving clarity,
-precision, organization, and compatibility. **Expand** is used only when
-explicitly selected or requested and may add useful requirements, edge cases,
-acceptance criteria, workflow guidance, or output constraints.
+- Default target is defined above; no target questions are asked.
+- Override with `target model: <value>` (also accepts `model: <value>` or `target: <value>`), for example `target model: <current-claude-model>` or `target model: model-neutral/auto`. A bare `provider: <value>` alone routes to that provider with provider-level guidance only.
+- **Refine** is the default mode and preserves the intended scope while improving clarity, precision, organization, and compatibility. **Expand** is used only when explicitly requested in the user's directions to Prefine and may add useful requirements, edge cases, acceptance criteria, workflow guidance, or output constraints.
+- Routing: recognizable OpenAI/GPT naming uses the OpenAI adapter; recognizable Anthropic/Claude naming uses the Anthropic adapter; otherwise the Other adapter applies. Model-neutral targets use shared provider-neutral rules.
 
 For a concrete provider and model, Prefine consults current official prompting
 documentation when available and applies only guidance relevant to that model,
@@ -50,12 +46,11 @@ claims. CI checks file portability, Git checkout, structure, and synchronization
 For a manual client smoke check, verify Prefine is discovered and submit a
 harmless draft such as “Write a greeting.” Confirm that Prefine:
 
-1. asks only for the provider or parent model family;
-2. after that answer, asks only for the model or refinement target; and
-3. after both answers, returns only a rewritten instructional prompt without
-   carrying out the draft.
+1. returns only a rewritten instructional prompt without carrying out the draft and without asking target questions;
+2. for `target model: <current-claude-model>`, applies Claude guidance; and
+3. for another provider target, applies the Other adapter.
 
-For an Expand smoke check, explicitly select or request Expand and confirm that
+For an Expand smoke check, explicitly request Expand and confirm that
 the final prompt may add useful supporting requirements while still not executing
 the underlying task.
 
@@ -63,7 +58,7 @@ A pinned Git commit fixes the shipped Prefine files but does not freeze external
 prompting guidance, provider model catalogs, documentation structure, or model
 behavior. Model names and prompting recommendations are resolved from current
 official documentation when required rather than treated as a permanent registry.
-See `skills/prefine/SKILL.md` for the full configuration, transformation, and
+See `skills/prefine/SKILL.md` for the full target resolution, transformation, and
 output contracts.
 
 ## Canonical source
