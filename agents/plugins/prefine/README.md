@@ -1,4 +1,4 @@
-# Prefine
+# prefine
 
 An interactive prompt compiler that turns rough requests into lean, effective prompts for OpenAI, Anthropic / Claude, other providers, or model-neutral use without executing the underlying task.
 
