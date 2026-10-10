@@ -7,9 +7,9 @@
     "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [
-      "Refine this draft prompt (default: OpenAI GPT 6.1 Sol).",
+      "Refine this draft prompt using the skill default target.",
       "Refine this draft for target model: <model>.",
-      "Expand this draft with requirements (default target)."
+      "Expand this draft with requirements using the skill default target."
     ]
   },
   "name": "prefine",

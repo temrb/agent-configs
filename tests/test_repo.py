@@ -500,6 +500,24 @@ class RepoTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 manifest(value)
 
+    def test_asset_contract_checks_name_schema_and_lengths(self):
+        import sys
+        sys.path.insert(0, str(REPO_ROOT / "scripts"))
+        from validation import manifest, skill
+        from unittest.mock import patch
+        import repo as engine
+        valid = {"name": "example.plugin", "version": "1.0.0",
+                 "description": "Example", "author": {"name": "Owner"},
+                 "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"}
+        manifest(valid)
+        with self.assertRaises(ValueError):
+            manifest(dict(valid, **{"$schema": "https://example.org/unknown.json"}))
+        with patch.object(engine, "ROOT", self.repo):
+            (self.source / "SKILL.md").write_text(
+                "---\\nname: prefine\\ndescription: " + "x" * 1025 + "\\n---\\nInstructions.\\n")
+            with self.assertRaises(ValueError):
+                skill(self.source, self.repo, engine.safe)
+
     def test_plugin_copy_is_portable_without_canonical_source(self):
         portable = self.outside / "portable"
         shutil.copytree(REPO_ROOT / "agents/plugins/prefine", portable)

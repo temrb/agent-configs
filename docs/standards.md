@@ -15,7 +15,7 @@ Do not infer compatibility with an agent client merely from a portable package l
 
 | Asset | Upstream reference | Repository contract |
 | --- | --- | --- |
-| Portable plugin | [Agent Plugins v1.0.0](https://agent-plugins.org/specification) | The portable `plugin.json` targets its canonical v1.0.0 `$schema`. This repository additionally requires `version` (semantic version), `description`, and `author.name` for releases. Core manifest fields cannot be replaced by client-specific ones. |
+| Portable plugin | [Agent Plugins v1.0.0](https://agent-plugins.org/specification) | The portable `plugin.json` uses the canonical v1.0.0 `$schema` when declared (required for this repository's published plugin). This repository additionally requires `version` (semantic version), `description`, and `author.name` for releases. Core manifest fields cannot be replaced by client-specific ones. |
 | Skill | [Agent Skills](https://agentskills.io/specification) | `SKILL.md` requires matching name, description, and body. The standard-library validator currently accepts a documented **single-line YAML frontmatter subset**, not arbitrary YAML; name and description length limits are enforced. |
 | Codex configuration | [Codex config reference](https://developers.openai.com/codex/config-reference) | Native TOML/JSON syntax and repository path safety are checked, not full Codex runtime or schema compatibility. |
 
