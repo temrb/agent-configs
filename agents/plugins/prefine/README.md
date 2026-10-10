@@ -2,7 +2,7 @@
 
 A prompt compiler with default target that turns rough requests into lean, effective prompts for OpenAI, Anthropic / Claude, other providers, or model-neutral use without executing the underlying task.
 
-Default: provider=OpenAI, model=GPT 6.1 Sol via OpenAI adapter.
+The canonical [skill contract](../../skills/prefine/SKILL.md#default-target) defines the default target and model resolution. Do not duplicate a model-version default in this README.
 
 ## Contents
 
@@ -27,7 +27,7 @@ the local source and reinstall/update the cached plugin, then start a new chat.
 Choose the plugin for release metadata and bundled distribution, or the
 standalone copy for a single skill. Avoid installing both.
 
-Prefine compiles single-turn against the default target unless explicitly overridden:
+Prefine compiles single-turn against the skill's default target unless explicitly overridden:
 
 - Default target is defined above; no target questions are asked.
 - Override with `target model: <value>` (also accepts `model: <value>` or `target: <value>`), for example `target model: <current-claude-model>` or `target model: model-neutral/auto`. A bare `provider: <value>` alone routes to that provider with provider-level guidance only.
