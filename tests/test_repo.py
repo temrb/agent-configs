@@ -21,6 +21,8 @@ class RepoTests(unittest.TestCase):
         native = self.repo / "agents/configs/codex/.codex"
         native.mkdir(parents=True)
         (native / "config.toml").write_text('sandbox_mode = "workspace-write"\n')
+        self.write_json(self.repo / "agents/configs/muse/settings.json", {})
+        self.write_json(self.repo / "agents/configs/opencode/opencode.json", {})
         shutil.copytree(REPO_ROOT / "scripts", self.script.parent,
                         ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
         self.write_json(self.repo / "repo-build.json", {"version": 1, "collections": ["agents/plugins"]})

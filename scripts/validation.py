@@ -78,7 +78,12 @@ def skill(directory, root, safe):
 def validate_assets(root, safe):
     from configs.codex import codex_configs
 
+    from configs.muse import muse_configs
+    from configs.opencode import opencode_configs
+
     codex_configs(root, safe)
+    muse_configs(root, safe)
+    opencode_configs(root, safe)
     for directory in sorted((root / CANONICAL_SKILLS).iterdir()):
         safe(directory, root)
         if directory.is_dir():

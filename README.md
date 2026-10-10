@@ -6,7 +6,7 @@ Maintainable, reusable agent assets for supported clients. The filesystem is the
 
 - **One canonical source:** edit an asset in its canonical collection rather than a bundled or installed copy.
 - **Explicit distribution:** generated plugin assets are reproducible and committed so packages can be used independently.
-- **Client-neutral core:** common skill, plugin, and build policies apply across clients; Codex-specific configuration and adapters belong in Codex-specific locations.
+- **Client-neutral core:** common skill, plugin, and build policies apply across clients; client-specific configuration and adapters belong in client-specific locations.
 - **Documented compatibility:** a portable file layout is not a promise that every agent client installs or executes it identically.
 - **Safe maintenance:** validate sources, generated artifacts, and ownership before release; never commit runtime credentials or state.
 
@@ -18,7 +18,7 @@ Maintainable, reusable agent assets for supported clients. The filesystem is the
 | [Plugins](agents/plugins/README.md) | Distributable plugin packages with optional bundled components | `agents/plugins/<name>/` |
 | [Configurations](agents/configs/README.md) | Client-native configuration and companion assets | `agents/configs/<platform>/` |
 
-Each collection README defines its asset contract, installation or consumption boundary, and extension procedure. Client-specific instructions, such as [Codex configuration](agents/configs/codex/README.md) and [Prefine installation](agents/plugins/prefine/README.md), live with their entries.
+Each collection README defines its asset contract, installation or consumption boundary, and extension procedure. Client-specific instructions, including [Codex](agents/configs/codex/README.md), [Meta Muse Code](agents/configs/muse/README.md), [OpenCode](agents/configs/opencode/README.md), and [Prefine installation](agents/plugins/prefine/README.md), live with their entries.
 
 ## Maintain
 

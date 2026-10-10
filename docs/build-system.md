@@ -105,8 +105,13 @@ Registering a collection enables build recipe discovery, not automatic asset val
 
 ## Asset validation and retirement
 
-`python3 scripts/repo.py validate` also checks native Codex TOML/JSON syntax
-independently of recipes (see [configuration validation](../agents/configs/codex/README.md)).
+`python3 scripts/repo.py validate` also checks native Codex TOML/JSON and Muse/OpenCode
+JSON independently of recipes (see [configuration entries](../agents/configs/README.md)).
+Client modules under `scripts/configs/` require canonical files and check path
+safety and known runtime artifacts. Muse and OpenCode share bounded JSON tree
+checks; Muse schema and installation details remain unverified because its
+official documentation requires login. These trees are never generated or
+installed by plugin synchronization; `repo-build.json` is unchanged.
 It inspects every canonical skill and plugin,
 including entries without recipes, plus bundled skills and existing Codex
 manifests. The local contract requires plugin README, name, semantic version,
