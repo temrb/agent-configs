@@ -68,6 +68,6 @@ The repository's `agents/skills/prefine/` is canonical. This plugin's
 `plugin.json` here is the canonical metadata. Edit those inputs and run
 `python3 scripts/repo.py sync` from the repository root before committing.
 
-See the [repository generation workflow](../../../README.md#repository-generation)
+See the [repository generation workflow](../../../docs/build-system.md#repository-generation)
 for checking output and adding entries. Generated files and their inventory are
 committed, including nested resources, so this plugin installs independently.
