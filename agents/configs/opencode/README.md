@@ -1,10 +1,10 @@
 # OpenCode configuration
 
-The canonical source is [opencode.json](opencode.json) in
-`agents/configs/opencode/`. It adopts the supplied `specs/context/opencode.json`
+The canonical source is [opencode.json](.config/opencode/opencode.json) in
+`agents/configs/opencode/.config/opencode/`. It adopts the supplied `specs/context/opencode.json`
 intent using the [OpenCode V2 configuration format](https://opencode.ai/v2/docs/config/).
-The ignored context draft is not a second maintained source. This storage directory
-is not an automatically installed configuration.
+The ignored context draft is not a second maintained source. The tree mirrors the standard user configuration layout relative to home.
+This storage directory is not an automatically installed configuration.
 
 ## Settings and compatibility
 
@@ -42,12 +42,12 @@ From the repository root, select the destination explicitly:
 
 ```bash
 # For project scope, use /path/to/project or /path/to/project/.opencode instead.
-opencode_destination="$HOME/.config/opencode"
+opencode_destination="${XDG_CONFIG_HOME:-$HOME/.config}/opencode"
 mkdir -p "$opencode_destination"
 if [ -e "$opencode_destination/opencode.json" ]; then
   cp -a "$opencode_destination/opencode.json" "$opencode_destination/opencode.json.backup-$(date +%Y%m%d-%H%M%S)"
 fi
-cp agents/configs/opencode/opencode.json "$opencode_destination/opencode.json"
+cp agents/configs/opencode/.config/opencode/opencode.json "$opencode_destination/opencode.json"
 ```
 
 Review and merge destination preferences manually before replacement. Check for
@@ -60,8 +60,8 @@ directory. Installation is explicit; no repository command updates live settings
 Copy only reviewed configuration, never the entire live config or data directory:
 
 ```bash
-opencode_source="$HOME/.config/opencode"
-cp "$opencode_source/opencode.json" agents/configs/opencode/opencode.json
+opencode_source="${XDG_CONFIG_HOME:-$HOME/.config}/opencode"
+cp "$opencode_source/opencode.json" agents/configs/opencode/.config/opencode/opencode.json
 git diff -- agents/configs/opencode/
 git status --short
 python3 scripts/repo.py validate

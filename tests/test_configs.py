@@ -14,8 +14,8 @@ from repo import safe
 
 
 class NativeConfigTests(unittest.TestCase):
-    clients = (("muse", "settings.json", muse_configs),
-               ("opencode", "opencode.json", opencode_configs))
+    clients = (("muse", ".config/muse/settings.json", muse_configs),
+               ("opencode", ".config/opencode/opencode.json", opencode_configs))
 
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
