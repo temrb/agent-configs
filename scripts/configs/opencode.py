@@ -3,4 +3,4 @@ from configs.native_json import json_configs
 
 
 def opencode_configs(root, safe):
-    json_configs(root, safe, "opencode", "opencode.json")
+    json_configs(root, safe, "opencode", ".config/opencode/opencode.json")

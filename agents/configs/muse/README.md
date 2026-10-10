@@ -1,51 +1,52 @@
 # Meta Muse Code configuration
 
-The canonical source is [settings.json](settings.json) in
-`agents/configs/muse/`. It preserves the supplied `specs/context/settings.json`
+The canonical source is [settings.json](.config/muse/settings.json) in
+`agents/configs/muse/.config/muse/`. It preserves the supplied `specs/context/settings.json`
 preferences: model and reasoning, approval profile, agent capacity, delegation,
 telemetry, and endpoint transport. `specs/context` is ignored local context,
 not a second maintained source. No Codex keys have been translated into Muse keys.
 
 ## Compatibility and installation scope
 
-The [official configuration documentation](https://ai.developer.meta.com/docs/muse-code/configuration)
-returned “Not Logged In” during implementation. The supplied keys, model availability,
-native user/project directory names, scope restrictions, and precedence could not
-be independently verified. This entry is a maintained context-derived configuration,
-with syntax validation, pending native compatibility verification. It makes no
-claim that Muse automatically loads this repository directory or that its approval
-profile provides Codex sandbox behavior. Do not rely on these settings as a verified
-security boundary.
+The public [Muse Code developer documentation](https://meta-models.github.io/muse-code-sdk/next/guides/extend/)
+places user settings at `$XDG_CONFIG_HOME/muse/settings.json`, defaulting to
+`~/.config/muse/settings.json`. This tree mirrors that standard user layout
+relative to home; it is not automatically loaded from this repository.
 
-Before activation, consult the documentation with authenticated access and confirm
-the supported keys, destination, and precedence for your installed Muse release.
-No user or project destination is guessed here.
+Project assets have separate native locations: hooks in `.muse/hooks.json`,
+MCP servers in root `.mcp.json`, and skills in `.agents/skills/`. The developer
+documentation does not establish `.muse/settings.json` as a project settings
+layer. Do not install this user settings file there.
+
+The [configuration reference](https://ai.developer.meta.com/docs/muse-code/configuration)
+still requires login. The supplied settings keys, model availability, and full
+runtime compatibility remain unverified; validation checks syntax and paths.
 
 ## Install or export
 
-From the repository root, set `muse_destination` to the **confirmed directory**
-for the intended user or project scope, or an export staging directory:
+From the repository root, use the standard user destination below, or set
+`muse_destination` to an export staging directory:
 
 ```bash
-: "${muse_destination:?Set a confirmed destination or export staging directory}"
+muse_destination="${XDG_CONFIG_HOME:-$HOME/.config}/muse"
 mkdir -p "$muse_destination"
 if [ -e "$muse_destination/settings.json" ]; then
   cp -a "$muse_destination/settings.json" "$muse_destination/settings.json.backup-$(date +%Y%m%d-%H%M%S)"
 fi
-cp agents/configs/muse/settings.json "$muse_destination/settings.json"
+cp agents/configs/muse/.config/muse/settings.json "$muse_destination/settings.json"
 ```
 
 Review and merge existing settings manually before replacing them. This copies
 only settings; it does not install credentials or synchronize a live client.
-User/project equivalence and precedence remain unverified.
+Project settings equivalence is not assumed.
 
 ## Import and maintenance
 
 Import only the reviewed settings file from a confirmed installation:
 
 ```bash
-: "${muse_source:?Set the confirmed source directory}"
-cp "$muse_source/settings.json" agents/configs/muse/settings.json
+muse_source="${XDG_CONFIG_HOME:-$HOME/.config}/muse"
+cp "$muse_source/settings.json" agents/configs/muse/.config/muse/settings.json
 git diff -- agents/configs/muse/
 git status --short
 python3 scripts/repo.py validate
