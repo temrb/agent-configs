@@ -26,10 +26,11 @@ def encoded(value):
 
 def safe(path, boundary):
     path = Path(os.path.abspath(path))
+    boundary = Path(os.path.abspath(boundary))
     if not path.is_relative_to(boundary) or path == boundary:
         raise ValueError(f"path must stay inside {boundary}: {path}")
-    current = ROOT
-    for part in path.relative_to(ROOT).parts:
+    current = Path(path.anchor)
+    for part in path.parts[1:]:
         current /= part
         if current.is_symlink():
             raise ValueError(f"symlink: {current}")
