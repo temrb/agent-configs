@@ -4,5 +4,6 @@ __pycache__/
 .repo-stage-*/
 *.zip
 
+# /.codex/
 
 specs/

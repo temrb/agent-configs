@@ -4,9 +4,10 @@ The source of truth is `agents/configs/codex/.codex/config.toml`. Native assets
 such as `hooks.json`, `hooks/`, and `rules/` belong alongside it. This repository
 storage path is not automatically loaded by Codex.
 
-The checkout's root `.codex/` is a local installation, excluded from canonical
-validation and synchronization. Update it explicitly when needed; maintain
-shared changes in `agents/configs/codex/.codex/`.
+The checkout's root `.codex/` is an **ignored local installation**, not a
+tracked source or generated output. Maintain changes in
+`agents/configs/codex/.codex/`, then install them explicitly when needed.
+Do not commit the root installation.
 
 ## Install or export
 
@@ -63,38 +64,19 @@ Never copy an entire live `CODEX_HOME` into the repository: it may contain
 `auth.json`, history, logs, caches, and other private runtime data. Review new
 untracked assets with `git status` as well as the diff.
 
-## Settings reconciliation
+## Maintained settings
 
-The local root configuration was moved without changing its contents. It
-already includes all settings from the previous remote user/project split:
+The canonical `config.toml` contains local preferences for the model, reasoning,
+approval/sandbox mode, search, multi-agent behavior, skills, and terminal UI.
+Treat these as explicit owner preferences, not portable defaults for all users
+or guaranteed settings for every Codex release. The available model, context,
+reviewer, and status-line features depend on the installed Codex version and
+account. Consult the [native file](.codex/config.toml) rather than duplicating
+individual values in this README.
 
-| Group | Preserved settings and values |
-| --- | --- |
-| Reasoning | `model_reasoning_effort = "low"`, `model_reasoning_summary = "concise"`, `plan_mode_reasoning_effort = "high"` |
-| Personality and output | `personality = "pragmatic"`, `tool_output_token_limit = 8000` |
-| Approval and sandbox | `approval_policy = "on-request"`, `sandbox_mode = "workspace-write"`, `sandbox_workspace_write.network_access = false` |
-| Search | top-level `web_search = "live"`, `tools.web_search.context_size = "medium"` |
-| Agents and skills | `agents.max_concurrent_threads_per_session = 3`, `skills.max_context_tokens = 8000` |
-
-The local customization also preserves fields omitted from that split:
-
-| Group | Preserved settings and values |
-| --- | --- |
-| Model | `model = "gpt-6.1-sol"` |
-| Context | `model_context_window = 1050000`, `model_auto_compact_token_limit = 700000`, `model_auto_compact_token_limit_scope = "total"` |
-| Reviewer | `approvals_reviewer = "auto_review"` |
-| Subagents | `agents.enabled = true`, `agents.default_subagent_model = "gpt-6-luna"`, `agents.default_subagent_reasoning_effort = "max"` |
-| TUI | `model`, `reasoning`, `five-hour-limit`, `weekly-limit`, `context-remaining`, `task-progress`, `fast-mode` in `tui.status_line` |
-
-These configuration keys are documented in the official reference. Model access,
-context limits, reviewer availability, and status item support depend on the
-installed Codex version and account; this collection preserves explicit local
-preferences rather than selecting replacement defaults. No separate uploaded
-reference file was available in this checkout for an independent comparison.
-
-`web_search` deliberately remains top-level. Placing it after
-`[sandbox_workspace_write]` without opening another table would nest it inside
-that table and change its meaning. Shell network access remains disabled.
+`web_search` is deliberately a top-level setting. Moving it after
+`[sandbox_workspace_write]` without opening a new table would change its TOML
+scope; shell network access is controlled separately.
 
 ## Validation
 
@@ -113,3 +95,5 @@ python3 scripts/repo.py sync --check
 python3 scripts/repo.py validate
 python3 -B -m unittest discover -s tests
 ```
+
+See [shared configuration ownership](../README.md) and [standards](../../../docs/standards.md).

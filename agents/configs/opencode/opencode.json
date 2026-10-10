@@ -1,0 +1,54 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+
+	"default_agent": "plan",
+	"update": "notify",
+	"snapshots": true,
+
+	"permissions": [
+		{ "action": "shell", "resource": "*", "effect": "ask" },
+
+		{ "action": "shell", "resource": "git status *", "effect": "allow" },
+		{ "action": "shell", "resource": "git diff *", "effect": "allow" },
+		{ "action": "shell", "resource": "git log *", "effect": "allow" },
+		{ "action": "shell", "resource": "git show *", "effect": "allow" },
+
+		{ "action": "shell", "resource": "git push *", "effect": "deny" },
+		{ "action": "shell", "resource": "git reset --hard *", "effect": "deny" },
+		{ "action": "shell", "resource": "git clean *", "effect": "deny" },
+
+		{ "action": "read", "resource": "*.env", "effect": "deny" },
+		{ "action": "read", "resource": "*.env.*", "effect": "deny" },
+		{ "action": "read", "resource": "*.dev.vars*", "effect": "deny" },
+
+		{ "action": "read", "resource": "*.env.example", "effect": "allow" },
+		{ "action": "read", "resource": "*.dev.vars.example", "effect": "allow" }
+	],
+
+	"agents": {
+		"reviewer": {
+			"description": "Read-only architecture and security reviewer",
+			"mode": "subagent",
+			"system": "Review changes for correctness, architecture boundaries, security, database migration safety, and missing tests. Follow AGENTS.md and current project documentation. Report findings by severity with file references. Do not modify files.",
+			"permissions": [
+				{ "action": "edit", "resource": "*", "effect": "deny" },
+				{ "action": "shell", "resource": "*", "effect": "deny" },
+				{ "action": "shell", "resource": "git diff *", "effect": "allow" },
+				{ "action": "shell", "resource": "git status *", "effect": "allow" }
+			]
+		}
+	},
+
+	"commands": {
+		"review": {
+			"description": "Review current changes against repository architecture",
+			"agent": "reviewer",
+			"template": "Review the current changes against AGENTS.md, docs/architecture.md, docs/feature-scaffold.md and relevant project records. Identify bugs, security risks, boundary violations, and missing tests. Do not edit files."
+		},
+
+		"verify": {
+			"description": "Run relevant repository checks",
+			"template": "Inspect the current diff and run the relevant checks from package.json. Prefer targeted verification. Explain what passed, failed, or was not run. Do not deploy or update remote resources."
+		}
+	}
+}

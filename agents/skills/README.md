@@ -1,15 +1,9 @@
-# skills
+# Skill collection
 
-Each subdirectory is one standalone canonical skill. Expected shape:
-`<name>/SKILL.md`. `SKILL.md` is the doc; the directory listing is the index.
+Each immediate entry `agents/skills/<name>/` contains the canonical `SKILL.md` and optional resources. The directory listing is the index; `SKILL.md` is the authoritative instruction contract. Skills follow the [Agent Skills specification](https://agentskills.io/specification).
 
-Plugins bundle committed copies of canonical skills through declarative recipes.
-Edit canonical files and synchronize before committing. See the
-[repository generation workflow](../../README.md#repository-generation).
-Installation of a generated plugin requires no build step.
+Frontmatter needs a matching lowercase hyphenated `name` (1–64 characters), a nonempty `description` (up to 1024 characters), and a body. The current standard-library validator intentionally supports a **single-line frontmatter subset**, not arbitrary YAML mappings or block scalars; `compatibility` is capped at 500 characters. Markdown resource links must resolve. See [standards](../../docs/standards.md) for the distinction between this supported subset and full upstream conformance.
 
-Validation requires a directory-matching name and nonempty description in
-single-line frontmatter, an instruction body, and resolving local Markdown links.
-Run `python3 scripts/repo.py validate`. Installable standalone copies are identified
-by Git commit; generated plugin copies are identified by their plugin release.
-See each plugin README for client installation and update procedures.
+Plugins may bundle committed copies of these sources through declarative generation recipes. Edit only the canonical skill and run `python3 scripts/repo.py sync`, then `sync --check` and `validate` before committing; generated bundles install without a repository build step.
+
+Standalone skills use a Git commit as their release identity; generated plugin bundles use the consuming plugin's version/tag. Client installation paths and discovery behavior are documented with the relevant plugin or client, rather than assumed to be universal.

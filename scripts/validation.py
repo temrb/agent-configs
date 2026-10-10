@@ -4,6 +4,8 @@ This is a deliberately bounded local contract, not a general JSON Schema validat
 """
 import json
 import re
+
+PLUGIN_SCHEMA = 'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json'
 from agent_paths import CANONICAL_SKILLS, PLUGIN_COLLECTION
 
 
@@ -13,10 +15,12 @@ def manifest(value, codex=False):
     for field in ('name', 'version', 'description'):
         if not isinstance(value.get(field), str) or not value[field].strip():
             raise ValueError(f'manifest requires nonempty {field}')
-    if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', value['name']):
+    if not re.fullmatch(r'[a-z0-9]+(?:[.-][a-z0-9]+)*', value['name']):
         raise ValueError('invalid manifest name')
     if not re.fullmatch(r'\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?', value['version']):
         raise ValueError('manifest version must be semantic version')
+    if not codex and '$schema' in value and value['$schema'] != PLUGIN_SCHEMA:
+        raise ValueError('unsupported plugin schema')
     author = value.get('author')
     if not isinstance(author, dict) or not isinstance(author.get('name'), str) or not author['name'].strip():
         raise ValueError('manifest requires author.name')
@@ -57,6 +61,10 @@ def skill(directory, root, safe):
         fields[match[1]] = match[2].strip().strip('\"\'')
     if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', fields.get('name', '')) or not fields.get('description'):
         raise ValueError(f'skill requires name and description: {path}')
+    if len(fields['name']) > 64 or len(fields['description']) > 1024:
+        raise ValueError(f'skill metadata length invalid: {path}')
+    if 'compatibility' in fields and len(fields['compatibility']) > 500:
+        raise ValueError(f'skill compatibility too long: {path}')
     if fields['name'] != directory.name or not '\n'.join(lines[end + 1:]).strip():
         raise ValueError(f'skill name/body invalid: {path}')
     for link in re.findall(r'\[[^\]]*\]\(([^\s)]+)\)', text):
@@ -70,7 +78,12 @@ def skill(directory, root, safe):
 def validate_assets(root, safe):
     from configs.codex import codex_configs
 
+    from configs.muse import muse_configs
+    from configs.opencode import opencode_configs
+
     codex_configs(root, safe)
+    muse_configs(root, safe)
+    opencode_configs(root, safe)
     for directory in sorted((root / CANONICAL_SKILLS).iterdir()):
         safe(directory, root)
         if directory.is_dir():
@@ -82,10 +95,15 @@ def validate_assets(root, safe):
         if not safe(entry / 'README.md', root).is_file():
             raise ValueError(f'plugin requires README: {entry}')
         canonical = manifest(json.loads(safe(entry / 'plugin.json', root).read_text()))
+        if canonical['name'] != entry.name:
+            raise ValueError(f'plugin name must match directory: {entry}')
         manifests = [(canonical, entry)]
         generated = entry / '.codex-plugin/plugin.json'
         if generated.exists():
-            manifests.append((manifest(json.loads(safe(generated, root).read_text()), codex=True), entry))
+            codex_value = manifest(json.loads(safe(generated, root).read_text()), codex=True)
+            if codex_value['name'] != canonical['name']:
+                raise ValueError(f'Codex manifest name differs from canonical plugin: {entry}')
+            manifests.append((codex_value, entry))
         for value, base in manifests:
             interface = value.get('interface', value.get('extensions', {}).get('com.openai', {}).get('interface', {}))
             references = [value[key] for key in ('mcp', 'hooks', 'apps') if key in value]

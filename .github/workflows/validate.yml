@@ -14,8 +14,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.11"
       # Add future repository checks here instead of creating a workflow per skill.
+      - name: Check documentation links
+        run: python3 -B scripts/check_docs.py
       - name: Test repository tooling
         run: python3 -B -m unittest discover -s tests
       - name: Validate canonical and bundled assets

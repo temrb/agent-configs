@@ -21,6 +21,8 @@ class RepoTests(unittest.TestCase):
         native = self.repo / "agents/configs/codex/.codex"
         native.mkdir(parents=True)
         (native / "config.toml").write_text('sandbox_mode = "workspace-write"\n')
+        self.write_json(self.repo / "agents/configs/muse/settings.json", {})
+        self.write_json(self.repo / "agents/configs/opencode/opencode.json", {})
         shutil.copytree(REPO_ROOT / "scripts", self.script.parent,
                         ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
         self.write_json(self.repo / "repo-build.json", {"version": 1, "collections": ["agents/plugins"]})
@@ -499,6 +501,24 @@ class RepoTests(unittest.TestCase):
         for value in ({}, dict(valid, keywords="wrong"), dict(valid, skills=[]), dict(valid, extensions=[]), dict(valid, version="1")):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 manifest(value)
+
+    def test_asset_contract_checks_name_schema_and_lengths(self):
+        import sys
+        sys.path.insert(0, str(REPO_ROOT / "scripts"))
+        from validation import manifest, skill
+        from unittest.mock import patch
+        import repo as engine
+        valid = {"name": "example.plugin", "version": "1.0.0",
+                 "description": "Example", "author": {"name": "Owner"},
+                 "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"}
+        manifest(valid)
+        with self.assertRaises(ValueError):
+            manifest(dict(valid, **{"$schema": "https://example.org/unknown.json"}))
+        with patch.object(engine, "ROOT", self.repo):
+            (self.source / "SKILL.md").write_text(
+                "---\\nname: prefine\\ndescription: " + "x" * 1025 + "\\n---\\nInstructions.\\n")
+            with self.assertRaises(ValueError):
+                skill(self.source, self.repo, engine.safe)
 
     def test_plugin_copy_is_portable_without_canonical_source(self):
         portable = self.outside / "portable"
