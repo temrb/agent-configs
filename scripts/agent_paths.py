@@ -3,6 +3,7 @@ from pathlib import Path
 
 PLUGIN_COLLECTION = Path("agents/plugins")
 CANONICAL_SKILLS = Path("agents/skills")
+CONFIG_COLLECTION = Path("agents/configs")
 
 
 def reserved_manifests(root):

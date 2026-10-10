@@ -68,6 +68,9 @@ def skill(directory, root, safe):
 
 
 def validate_assets(root, safe):
+    from configs.codex import codex_configs
+
+    codex_configs(root, safe)
     for directory in sorted((root / CANONICAL_SKILLS).iterdir()):
         safe(directory, root)
         if directory.is_dir():

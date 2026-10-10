@@ -18,11 +18,11 @@ class RepoTests(unittest.TestCase):
         self.outside = Path(self.temporary.name)
         self.repo = self.outside / "repo"
         self.script = self.repo / "scripts/repo.py"
-        self.script.parent.mkdir(parents=True)
-        shutil.copy2(REPO_ROOT / "scripts/repo.py", self.script)
-        shutil.copy2(REPO_ROOT / "scripts/generators.py", self.script.parent / "generators.py")
-        shutil.copy2(REPO_ROOT / "scripts/validation.py", self.script.parent / "validation.py")
-        shutil.copy2(REPO_ROOT / "scripts/agent_paths.py", self.script.parent / "agent_paths.py")
+        native = self.repo / "agents/configs/codex/.codex"
+        native.mkdir(parents=True)
+        (native / "config.toml").write_text('sandbox_mode = "workspace-write"\n')
+        shutil.copytree(REPO_ROOT / "scripts", self.script.parent,
+                        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
         self.write_json(self.repo / "repo-build.json", {"version": 1, "collections": ["agents/plugins"]})
         self.source = self.repo / "agents/skills/prefine"
         self.destination = self.repo / "agents/plugins/prefine/skills/prefine"
@@ -84,6 +84,11 @@ class RepoTests(unittest.TestCase):
         self.run_cli(check=True, succeeds=False)
         self.run_cli(succeeds=False)
         self.assertEqual(self.snapshot(self.repo), before)
+
+    def test_sync_does_not_require_configuration_validator(self):
+        shutil.rmtree(self.script.parent / "configs")
+        self.run_cli()
+        self.run_cli(check=True)
 
     def test_sync_from_outside_repository_copies_complete_tree(self):
         self.run_cli(check=True, succeeds=False)

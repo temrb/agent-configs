@@ -7,6 +7,7 @@ Personal agent configs — plugins, skills, snippets, etc. The filesystem is the
 ```text
 agent-configs/
   agents/
+    configs/codex/README.md + .codex/config.toml
     plugins/<name>/README.md + plugin.json + skills/<name>/SKILL.md
     skills/<name>/SKILL.md
   scripts/
@@ -17,13 +18,15 @@ agent-configs/
   LICENSE
 ```
 
-See `agents/plugins/README.md` and `agents/skills/README.md` for what belongs in each collection.
+See [plugins](agents/plugins/README.md), [skills](agents/skills/README.md), and
+[Codex configuration](agents/configs/codex/README.md) for what belongs in each collection.
 
 ## Repository generation
 
 Canonical skills live in `agents/skills/<name>/`. Plugin metadata stays canonical in
 `agents/plugins/<name>/plugin.json`. Generated skill trees and Codex manifests are
 committed, so each plugin installs independently without a build step.
+Repository validation requires Python 3.11+ for native TOML parsing.
 Edit canonical inputs, then run:
 
 ```bash
@@ -40,8 +43,10 @@ check. The shared validation workflow runs tooling tests, asset validation, and 
 generated-content check as separate checks.
 
 `repo-build.json` registers `agents/plugins`; collection paths are relative to
-the repository root. `scripts/agent_paths.py` defines the shared plugin and
-canonical skill locations for asset and reserved manifest discovery. Each collection's immediate
+the repository root. `scripts/agent_paths.py` defines shared collection roots
+for asset and reserved manifest discovery. Native configuration layouts belong
+with their platform-specific validators, rather than in the shared path module.
+Each collection's immediate
 entry directories may contain a version-1 `build.json` recipe. Prefine declares:
 
 ```json
@@ -109,6 +114,7 @@ coverage for a new renderer to the shared standard-library test suite.
 ## Usage
 
 - Plugin: point your agent client at `agents/plugins/<name>`. Details live in that plugin's `README.md`.
+- Configuration: import or export `agents/configs/codex/.codex/`. See [Codex installation and portability](agents/configs/codex/README.md). No build is required.
 - Skill: point your agent client at the skill directory (`agents/plugins/<name>/skills/<skill-name>` or `agents/skills/<name>`). The colocated `SKILL.md` is the definition and the doc.
 
 ## Adding
@@ -117,10 +123,13 @@ Copy an existing entry as a template and write colocated docs — no root edits:
 
 - New plugin: copy the `agents/plugins/<name>/` shape, fill in `plugin.json`, that plugin's `README.md`, canonical skills, and `build.json` as described above.
 - New standalone skill: add `agents/skills/<name>/SKILL.md`.
+- Codex configuration: edit `agents/configs/codex/.codex/config.toml` and keep associated native assets beside it; document installation in `agents/configs/codex/README.md`.
 
 ## Asset validation and retirement
 
-`python3 scripts/repo.py validate` inspects every canonical skill and plugin,
+`python3 scripts/repo.py validate` also checks native Codex TOML/JSON syntax
+independently of recipes (see [configuration validation](agents/configs/codex/README.md)).
+It inspects every canonical skill and plugin,
 including entries without recipes, plus bundled skills and existing Codex
 manifests. The local contract requires plugin README, name, semantic version,
 description, author name, typed optional interface/keywords, and existing skill
