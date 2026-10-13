@@ -1,0 +1,26 @@
+{
+	"$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+	"name": "prefine",
+	"version": "0.2.2",
+	"description": "A prompt compiler with a default OpenAI target that refines or explicitly expands draft prompts without executing the underlying task.",
+	"author": {
+		"name": "Plugin owner"
+	},
+	"extensions": {
+		"com.openai": {
+			"interface": {
+				"displayName": "Prefine",
+				"shortDescription": "Refine and expand prompts",
+				"longDescription": "Turn rough drafts into lean instructional prompts without executing the underlying task. Uses the default OpenAI target unless explicitly overridden by a model, provider, or model-neutral selector. Supports OpenAI, Anthropic / Claude, other providers, and model-neutral prompts; resolves current official prompting guidance when applicable; preserves scope in Refine mode and adds requirements only when Expand is explicitly requested. The final output is only the compiled prompt.",
+				"developerName": "Plugin owner",
+				"category": "Productivity",
+				"capabilities": [],
+				"defaultPrompt": [
+					"Refine this draft prompt using the skill default target.",
+					"Refine this draft for target model: <model>.",
+					"Expand this draft with requirements using the skill default target."
+				]
+			}
+		}
+	}
+}

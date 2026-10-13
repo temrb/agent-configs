@@ -1,0 +1,20 @@
+{
+	"schema_version": 1,
+	"model": "muse-wonder-1.0",
+	"reasoning_effort": "max",
+	"permissions": {
+		"default_profile": "auto_review"
+	},
+	"agents": {
+		"execution_capacity": 4
+	},
+	"run": {
+		"subagent_delegation_mode": "auto"
+	},
+	"telemetry": {
+		"enabled": false
+	},
+	"endpoint_transport": {
+		"base_url": "https://api.meta.ai/v1"
+	}
+}

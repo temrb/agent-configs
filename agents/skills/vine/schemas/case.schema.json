@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VINE case v1",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requirement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "oracle": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "fixturePaths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "testFixtureDigest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "defectiveRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fixedRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "redAttempt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "greenAttempt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "surroundingSuites": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "assertion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "setupValidated": {
+      "type": "boolean"
+    },
+    "chronology": {
+      "type": "string",
+      "enum": ["red-before-fix", "fix-before-test", "replay", "unconfirmed"]
+    },
+    "approval": {
+      "type": ["string", "null"]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "requirement",
+    "oracle",
+    "tests",
+    "fixturePaths",
+    "testFixtureDigest",
+    "defectiveRevision",
+    "fixedRevision",
+    "redAttempt",
+    "greenAttempt",
+    "surroundingSuites",
+    "assertion",
+    "setupValidated",
+    "chronology",
+    "approval"
+  ],
+  "additionalProperties": false
+}

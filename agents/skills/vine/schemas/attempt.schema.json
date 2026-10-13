@@ -1,0 +1,369 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VINE attempt v1",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "helperVersion": {
+      "const": "1.0.0"
+    },
+    "helperDigest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "adapterVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task": {
+      "type": "string",
+      "minLength": 1
+    },
+    "case": {
+      "type": ["string", "null"]
+    },
+    "trust": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "const": "local"
+        },
+        "ciRun": {
+          "type": ["string", "null"]
+        }
+      },
+      "required": ["source", "ciRun"],
+      "additionalProperties": false
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baselineRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evaluatedRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "startedAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "endedAt": {
+      "type": ["string", "null"]
+    },
+    "executable": {
+      "type": "string",
+      "minLength": 1
+    },
+    "argv": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cwd": {
+      "type": "string",
+      "minLength": 1
+    },
+    "suite": {
+      "type": "string",
+      "minLength": 1
+    },
+    "selection": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "setup": {
+      "type": ["string", "null"]
+    },
+    "pre": {
+      "type": "object",
+      "properties": {
+        "digest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": ["file", "symlink", "deleted"]
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mode": {
+                "type": "number"
+              },
+              "target": {
+                "type": "string"
+              }
+            },
+            "required": ["path", "kind"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["digest", "entries"],
+      "additionalProperties": false
+    },
+    "post": {
+      "type": ["object", "null"],
+      "properties": {
+        "digest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": ["file", "symlink", "deleted"]
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mode": {
+                "type": "number"
+              },
+              "target": {
+                "type": "string"
+              }
+            },
+            "required": ["path", "kind"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["digest", "entries"],
+      "additionalProperties": false
+    },
+    "policyDigest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lifecycle": {
+      "type": "string",
+      "enum": ["started", "completed", "interrupted", "orphaned"]
+    },
+    "exitCode": {
+      "type": ["number", "null"]
+    },
+    "signal": {
+      "type": ["string", "null"]
+    },
+    "failureClassification": {
+      "type": "string",
+      "enum": ["behavioral", "setup", "collection", "environment", "unknown"]
+    },
+    "reports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "adapter": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": ["valid", "missing", "malformed"]
+          },
+          "observation": {
+            "type": "object",
+            "properties": {
+              "executed": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "skipped": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "failed": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "expectedFailure": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "discovery": {
+                "type": "string",
+                "enum": ["observed", "unknown"]
+              },
+              "filtered": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "executed",
+              "skipped",
+              "failed",
+              "expectedFailure",
+              "discovery",
+              "filtered"
+            ],
+            "additionalProperties": false
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": ["path", "adapter", "status", "limitations"],
+        "additionalProperties": false
+      }
+    },
+    "logs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "minLength": 1
+          },
+          "truncated": {
+            "type": "boolean"
+          }
+        },
+        "required": ["path", "digest", "truncated"],
+        "additionalProperties": false
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "artifact": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["path", "digest", "buildId", "filesDigest"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "buildId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "filesDigest": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "pid": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "helperVersion",
+    "helperDigest",
+    "adapterVersion",
+    "id",
+    "task",
+    "case",
+    "trust",
+    "project",
+    "baselineRevision",
+    "evaluatedRevision",
+    "startedAt",
+    "endedAt",
+    "executable",
+    "argv",
+    "cwd",
+    "suite",
+    "selection",
+    "environment",
+    "setup",
+    "pre",
+    "post",
+    "policyDigest",
+    "lifecycle",
+    "exitCode",
+    "signal",
+    "failureClassification",
+    "reports",
+    "logs",
+    "limitations",
+    "artifact",
+    "pid"
+  ],
+  "additionalProperties": false
+}

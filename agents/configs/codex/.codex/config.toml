@@ -1,0 +1,79 @@
+
+#:schema https://developers.openai.com/codex/config-schema.json
+
+# =============================================================================
+# Model & Reasoning
+# =============================================================================
+
+model = "gpt-6.1-sol"
+model_reasoning_effort = "low"
+model_reasoning_summary = "concise"
+plan_mode_reasoning_effort = "high"
+personality = "pragmatic"
+
+# =============================================================================
+# Context & Token Management
+# =============================================================================
+
+model_context_window = 1_050_000
+model_auto_compact_token_limit = 700_000
+model_auto_compact_token_limit_scope = "total"
+tool_output_token_limit = 8_000
+
+# =============================================================================
+# Sandbox & Approvals
+# =============================================================================
+
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+approvals_reviewer = "auto_review"
+
+# Live search is a root setting, separate from shell network access.
+web_search = "live"
+
+[sandbox_workspace_write]
+# Require escalation for restricted shell network access.
+network_access = false
+
+# =============================================================================
+# Web Search
+# =============================================================================
+
+[tools]
+web_search = { context_size = "medium" }
+
+# =============================================================================
+# Multi-Agent Configuration
+# =============================================================================
+
+[agents]
+enabled = true
+
+# Default subagent configuration.
+default_subagent_model = "gpt-6-luna"
+default_subagent_reasoning_effort = "max"
+
+# Parallelize independent tasks; avoid shared-state conflicts.
+max_concurrent_threads_per_session = 3
+
+# =============================================================================
+# Skills
+# =============================================================================
+
+[skills]
+max_context_tokens = 8_000
+
+# =============================================================================
+# Terminal UI
+# =============================================================================
+
+[tui]
+status_line = [
+    "model",
+    "reasoning",
+    "five-hour-limit",
+    "weekly-limit",
+    "context-remaining",
+    "task-progress",
+    "fast-mode",
+]

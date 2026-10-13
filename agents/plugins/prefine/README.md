@@ -1,0 +1,81 @@
+# prefine
+
+A prompt compiler with default target that turns rough requests into lean, effective prompts for OpenAI, Anthropic / Claude, other providers, or model-neutral use without executing the underlying task.
+
+The bundled [skill contract](skills/prefine/SKILL.md#default-target) defines the default target and model resolution. Do not duplicate a model-version default in this README.
+
+## Contents
+
+- `plugin.json` — plugin metadata (machine source of truth for name, version, and description).
+- `skills/prefine/SKILL.md` — the skill definition and interaction contract.
+
+## Usage
+
+For Codex standalone use, copy the repository's canonical `agents/skills/prefine/`
+directory to `~/.agents/skills/prefine/`, or a project's `.agents/skills/prefine/`.
+Start a new session and invoke `$prefine` with a draft. Use one installed copy to
+avoid duplicate discovery. To update, replace that installed directory from the
+chosen Git commit, including removal of obsolete resources, and start a new
+session. See [Codex skill documentation](https://developers.openai.com/codex/skills).
+
+For the bundled plugin in the ChatGPT desktop app, add a local marketplace entry
+whose source points to this complete plugin directory, restart the app, and
+install from that local source in the Plugins Directory. Follow the official
+[local marketplace procedure](https://developers.openai.com/plugins/build/plugins)
+for marketplace metadata. Update the source directory, restart the app, refresh
+the local source and reinstall/update the cached plugin, then start a new chat.
+Choose the plugin for release metadata and bundled distribution, or the
+standalone copy for a single skill. Avoid installing both.
+
+For Skills CLI installation, see `agents/skills/prefine/docs/installation.md` in a repository checkout, or the [installation guide](https://github.com/temrb/agent-configs/blob/main/agents/skills/prefine/docs/installation.md).
+
+Prefine normally compiles in one turn against the skill's default target unless explicitly overridden. A missing draft or essential clarification may require a reply; the active request's settings persist:
+
+- Default target is defined above; no target questions are asked.
+- Override with `target model: <value>` (also accepts `model: <value>` or `target: <value>`), for example `target model: <current-claude-model>` or `target model: model-neutral/auto`. A bare `provider: <value>` alone routes to that provider with provider-level guidance only.
+- **Refine** is the default mode and preserves the intended scope while improving clarity, precision, organization, and compatibility. **Expand** is used only when explicitly requested in the user's directions to Prefine and may add useful requirements, edge cases, acceptance criteria, workflow guidance, or output constraints.
+- Model names provide lookup hints; provider guidance requires consistent identification or official verification. Conflicting selectors use the shared core. Model-neutral targets skip provider lookup.
+
+For a concrete provider and model, Prefine consults current official prompting
+documentation when available and applies only guidance relevant to that model,
+family, or provider. OpenAI and Anthropic / Claude use dedicated adapters. Other
+providers use their official guidance when it can be verified. Model-neutral
+targets use the shared provider-neutral rules without importing provider-specific
+assumptions.
+
+These are documented client procedures, not automated client compatibility
+claims. CI checks file portability, Git checkout, structure, and synchronization.
+For a manual client smoke check, verify Prefine is discovered and submit a
+harmless draft such as “Write a greeting.” Confirm that Prefine:
+
+1. returns only a rewritten instructional prompt without carrying out the draft and without asking target questions;
+2. replace `<current-claude-model>` in `target model: <current-claude-model>` with a currently verified Claude identifier, then confirm in retrieval traces that Prefine reads applicable official guidance; final wording may remain unchanged when guidance adds nothing material; and
+3. for another provider target, applies the Other adapter.
+
+For an Expand smoke check, explicitly request Expand and confirm that
+the final prompt may add useful supporting requirements while still not executing
+the underlying task.
+
+A pinned Git commit fixes the shipped Prefine files but does not freeze external
+prompting guidance, provider model catalogs, documentation structure, or model
+behavior. Model names and prompting recommendations are resolved from current
+official documentation when required rather than treated as a permanent registry.
+See `skills/prefine/SKILL.md` for the full target resolution, transformation, and
+output contracts.
+
+## Canonical source
+
+The repository's `agents/skills/prefine/` is canonical. This plugin's
+`skills/prefine/` and `.codex-plugin/plugin.json` are generated by `build.json`;
+`plugin.json` here is the canonical metadata. Edit those inputs and run
+`python3 scripts/repo.py sync` from the repository root before committing.
+
+See the [repository generation workflow](https://github.com/temrb/agent-configs/blob/main/docs/build-system.md#repository-generation)
+for checking output and adding entries. Generated files and their inventory are
+committed, so this plugin installs independently. Only `SKILL.md` is bundled from
+the canonical skill directory.
+
+The canonical skill's `tests/fixtures/prefine-behavior.json` and
+`docs/evaluation.md` provide semantic regression cases and a trace-based
+evaluation procedure in the repository. These development resources are excluded
+from the plugin. Package checks do not establish model instruction following.
