@@ -33,7 +33,7 @@ Editing objectives are open-ended. Refactor means restructure without changing b
 
 ## Default target
 
-Default: provider=OpenAI, model=GPT 6.1 Sol via [OpenAI adapter](#openai-adapter).
+Default: provider=OpenAI, model=`gpt-6.2-sol` via [OpenAI adapter](#openai-adapter).
 
 ## Target selection (no questions)
 
@@ -79,9 +79,11 @@ Reuse guidance retrieved during the active compilation without repeating freshne
 
 Use only for a consistently identified or verified OpenAI target, including the default.
 
-Lookup seeds: [Latest-model guide](https://developers.openai.com/api/docs/guides/latest-model) and [Prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering).
+For concrete targets, use the official [model catalog](https://developers.openai.com/api/docs/models) to verify the exact model and follow its guidance links. The [GPT-6.2 Sol guide view](https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6.2-sol) is the default target's lookup seed.
 
-Locate the selected model's actual section through current official indexes and follow relevant model-specific links; do not stop at the generic latest-model page. Provider-only targets use provider-wide guidance without assuming the latest model.
+The [latest-model guide](https://developers.openai.com/api/docs/guides/latest-model) can serve different family guides through its `model` query parameter. Follow the official model and family navigation and keep any supplied query parameter. For example, the [GPT-6 Astra guide view](https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6-astra) serves the GPT-6 and GPT-6.1 family guide. Verify that the returned content covers the selected target before using its guidance.
+
+For provider-wide guidance, including provider-only requests, use [Prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering).
 
 ### Anthropic / Claude adapter
 

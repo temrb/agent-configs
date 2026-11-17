@@ -13,7 +13,7 @@
     ]
   },
   "name": "prefine",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A prompt compiler with a default OpenAI target that refines or explicitly expands draft prompts without executing the underlying task.",
   "author": {
     "name": "Plugin owner"
