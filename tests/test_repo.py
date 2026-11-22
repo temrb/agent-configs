@@ -115,6 +115,29 @@ class RepoTests(unittest.TestCase):
         self.run_cli(check=True)
         self.assert_equal_trees()
 
+    def test_copy_tree_bundles_a_skill_file_and_references_as_separate_roots(self):
+        self.write_json(self.recipe, {"version": 1, "steps": [
+            {"generator": "copy-tree", "source": "../../skills/prefine/SKILL.md",
+             "output": "skills/prefine/SKILL.md"},
+            {"generator": "copy-tree", "source": "../../skills/prefine/references",
+             "output": "skills/prefine/references"},
+        ]})
+        self.run_cli()
+        self.run_cli(check=True)
+        contract = self.source / "SKILL.md"
+        self.assertEqual((self.destination / "SKILL.md").read_bytes(), contract.read_bytes())
+        self.assertEqual(self.snapshot(self.destination / "references"),
+                         self.snapshot(self.source / "references"))
+        self.assertEqual({path.name for path in self.destination.iterdir()}, {"SKILL.md", "references"})
+
+        contract.write_text("Updated contract\n")
+        self.assertIn("changed", self.run_cli(check=True, succeeds=False))
+        self.run_cli()
+        self.assertEqual((self.destination / "SKILL.md").read_bytes(), contract.read_bytes())
+
+        contract.unlink()
+        self.assert_rejected_without_writes()
+
     def test_check_detects_drift_without_writes_and_sync_repairs_it(self):
         self.run_cli()
         for difference in ("changed", "missing", "extra", "missing directory", "extra directory"):

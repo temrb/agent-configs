@@ -4,8 +4,7 @@ from validation import manifest as validate_manifest
 
 
 def copy_tree(source, scan):
-    if not source.is_dir():
-        raise ValueError(f"copy-tree source must be a directory: {source}")
+    """Copy a regular file or a complete directory tree."""
     return scan(source)
 
 

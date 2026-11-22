@@ -23,9 +23,10 @@ generation recipes. Edit only the canonical skill and run
 generated bundles install without a repository build step. Use `copy-skill` as
 the standard skill recipe: it creates the skill directory containing only
 `SKILL.md`. Development docs, tests, and fixtures stay in the canonical source.
-Required runtime resources must be explicitly included through additional recipe
-steps, with links resolving inside the distributed package.
+For a skill with runtime resources, use separate `copy-tree` steps for the
+contract file and required resource directories. Links must resolve inside the
+distributed package.
 
 Standalone skills use a Git commit as their release identity; generated plugin bundles use the consuming plugin's version/tag. Client installation paths and discovery behavior are documented with the relevant plugin or client, rather than assumed to be universal.
 
-`skills add` sources must be scoped to `agents/skills`, never the bare repository, to avoid the generated Prefine duplicate. See Prefine [installation](prefine/docs/installation.md) and VINE [installation](vine/docs/installation.md); VINE supports only its custom installer, not `skills add`.
+`skills add` sources must be scoped to `agents/skills` to avoid discovering generated plugin copies. See the [Prefine installation guide](prefine/docs/installation.md). VINE uses its [custom installer](vine/docs/installation.md).

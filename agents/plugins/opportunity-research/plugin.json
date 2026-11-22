@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "opportunity-research",
+  "version": "0.1.0",
+  "description": "Research software opportunities and assess buyer workflows, reachable demand, launch risk, and delivery economics.",
+  "author": {
+    "name": "Plugin owner"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Opportunity Research",
+        "shortDescription": "Research software markets",
+        "longDescription": "Start, resume, or revise a research phase. Assess buyer workflows, spending, reachable demand, launch risk, and delivery economics to decide what warrants discovery, paid validation, or a production build. Save the decision and supporting evidence in the project.",
+        "developerName": "Plugin owner",
+        "category": "Education & Research",
+        "capabilities": [],
+        "defaultPrompt": [
+          "Research software opportunities in independent bike shop operations in the US."
+        ]
+      }
+    }
+  }
+}

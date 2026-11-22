@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "generator": "copy-tree",
+      "source": "../../skills/opportunity-research/SKILL.md",
+      "output": "skills/opportunity-research/SKILL.md"
+    },
+    {
+      "generator": "copy-tree",
+      "source": "../../skills/opportunity-research/references",
+      "output": "skills/opportunity-research/references"
+    },
+    {
+      "generator": "codex-manifest",
+      "source": "plugin.json",
+      "output": ".codex-plugin/plugin.json"
+    }
+  ]
+}

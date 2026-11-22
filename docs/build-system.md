@@ -62,10 +62,12 @@ entry directories may contain a version-1 `build.json` recipe. Prefine declares:
 Paths are relative to the recipe directory. Sources must stay inside the
 repository; outputs must stay inside their entry. `copy-skill` is the standard
 for skill bundles: it copies only `SKILL.md` into the output directory. Skill-local
-`docs/`, `tests/`, fixtures, and other files stay in the canonical source.
-Required runtime resources must be explicitly included through additional recipe
-steps. `copy-tree` remains available for explicitly copying complete resource
-directories, preserving Git-compatible regular/executable modes (0644/0755).
+`docs/`, `tests/`, and fixtures stay in the canonical source.
+For a skill with relative links to runtime resources, use separate `copy-tree`
+steps for `SKILL.md` and the required resources, as in the
+[Opportunity Research recipe](../agents/plugins/opportunity-research/build.json).
+`copy-tree` copies regular files or complete directories, preserving
+Git-compatible regular/executable modes (0644/0755).
 Links in distributed files must resolve inside the package, including when it is
 copied outside the repository.
 Meaningful empty directories require a committed placeholder such as `.gitkeep`;
