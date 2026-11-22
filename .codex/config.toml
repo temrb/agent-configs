@@ -5,11 +5,17 @@
 # Model & Reasoning
 # =============================================================================
 
-model = "gpt-6.1-sol"
-model_reasoning_effort = "low"
+model = "gpt-6.2-sol"
+model_reasoning_effort = "medium"
 model_reasoning_summary = "concise"
 plan_mode_reasoning_effort = "high"
 personality = "pragmatic"
+
+# =============================================================================
+# Web Search
+# =============================================================================
+
+web_search = "live"
 
 # =============================================================================
 # Context & Token Management
@@ -28,16 +34,9 @@ sandbox_mode = "workspace-write"
 approval_policy = "on-request"
 approvals_reviewer = "auto_review"
 
-# Live search is a root setting, separate from shell network access.
-web_search = "live"
-
 [sandbox_workspace_write]
 # Require escalation for restricted shell network access.
 network_access = false
-
-# =============================================================================
-# Web Search
-# =============================================================================
 
 [tools]
 web_search = { context_size = "medium" }
@@ -54,7 +53,7 @@ default_subagent_model = "gpt-6-luna"
 default_subagent_reasoning_effort = "max"
 
 # Parallelize independent tasks; avoid shared-state conflicts.
-max_concurrent_threads_per_session = 3
+max_concurrent_threads_per_session = 10
 
 # =============================================================================
 # Skills
