@@ -10,8 +10,11 @@ Save this checklist in the phase's `notes/status.md`. Use links relative to that
 
 Check completed items and link to the evidence. Label unchecked items as pending, not applicable, unavailable, or blocked and give the reason. Pending items keep the phase open. Document what the other unchecked items mean for the decision. A documented lack of live research access can close the phase once the research plan is verified.
 
+For a broad occupation scan, link the completed workflow map item to `./workflow-map.md`. If the map or its coverage evidence is incomplete, use the unchecked-item conventions above. For a focused buyer brief, mark the item `not applicable` and record the reason.
+
 - [ ] Starting sources synthesized
 - [ ] Settings in scope covered and relevant prior phases reviewed
+- [ ] Workflow map and coverage limits recorded
 - [ ] Targeted second pass resolved
 - [ ] Serious leads assessed or decisively ruled out
 - [ ] Report or research plan checked against the notes and rubric

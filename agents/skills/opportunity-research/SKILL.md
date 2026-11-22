@@ -25,6 +25,8 @@ Continue after progress updates and milestones. If a source or lead is blocked, 
 
 Read the [source guide](./references/source-guide.md). Synthesize the starting sources and consult relevant earlier phases to generate and challenge hypotheses. Reuse applicable synthesis on resume or revision. Look beyond the customer and source mix already covered, within the brief. For open discovery, sweep consumer, business, and intermediary-led settings across industries.
 
+When the brief calls for a broad occupation scan, use [labor market mapping](./references/labor-market-mapping.md) to shortlist recurring buyer workflows by industry. Save the map in the researched project at `phases/phase-NN/notes/workflow-map.md` and link it from the phase's `notes/status.md`. For a focused buyer brief, continue through ordinary discovery and scoped-offer screening.
+
 Start from the buyer's actual workflow and spending. Look for purchases, costly workarounds, failed switches, and abandoned attempts. Include outcomes buyers cannot access or afford. Trace what they spend, lose, or give up, who controls the budget, how often the problem occurs in a reachable segment, and what changed that might make a better outcome possible. Log searches and the evidence behind the strongest leads and early eliminations.
 
 If the first sweep yields mostly seller claims, thin economics, or few reachable buyers, run a targeted second pass using different buyer sources and workflow terms. Record the result or why a second pass was unnecessary. If live research is unavailable across available routes, document which checks are blocked and proceed to the research-plan format. Individual source failures are evidence limits for the affected claims.
