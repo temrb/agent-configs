@@ -27,7 +27,7 @@ any limitations. Keep account identifiers, tokens, and private traces out of Git
 
 No Skills CLI compatibility testing has succeeded yet; status remains unverified. The source is unpublished, so the following post-publication checks have not been run:
 
-1. Run `--list` against the scoped `agents/skills` source; confirm discovery of only `prefine` and `vine`.
+1. Run `--list` against the scoped `agents/skills` source and confirm that it discovers each canonical skill once.
 2. Perform a negative test using the bare repository source; record the duplicate-discovery behavior or failure to confirm why scoping is required.
 3. Verify project-local Prefine installation, client discovery, and a smoke test using `Write a greeting`. Confirm Prefine returns a refined prompt without executing the greeting task.
 4. Verify global Codex installation with `-g -a codex`, followed by list, update, and remove operations.
