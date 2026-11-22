@@ -2,7 +2,7 @@
 
 Save this checklist in the phase's `notes/status.md`. Use links relative to that file.
 
-- **Brief.** Phase, date, scope, and constraints from the user. Record assumptions that affect the decision.
+- **Brief.** Phase, date, scope, and constraints from the user. Record any competition restriction explicitly stated in the current brief or invocation. Use the open default when the current request sets none. Record assumptions that affect the decision.
 - **State.** `in progress` or `complete`. At completion, link to `../report.md`, record the verification date, and identify the deliverable as a research report or research plan.
 - **Next action.** While in progress, name the first unfinished check and where to resume. At completion, record the next external test or dependency if applicable.
 
@@ -25,4 +25,4 @@ Use the rubric's gate outcomes and dispositions. For an early elimination, recor
 
 ## Changes and blockers
 
-Record scope changes, access limits, and decisions that affect what a resumed run should do.
+Record scope changes, access limits, and decisions that affect what a resumed run should do. When revising under the current rubric, record which decisions were reopened because they depended on competition alone and link to applicable buyer, risk, and economics evidence.

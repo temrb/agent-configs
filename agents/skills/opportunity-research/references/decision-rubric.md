@@ -21,22 +21,21 @@ Show buyer value after review and rework, cash contribution per sale, and operat
 A lead can pass through either path.
 
 - **Standalone business.** The first offer has an evidence-grounded path to sufficient paid volume at sustainable acquisition and delivery costs. State what would make it too small or expensive.
-- **Commercial expansion.** Name the next paid workflow, product, or segment and identify its buyer, budget, and channel. Show how it materially improves price, frequency, or volume and what the first sale provides that helps win it. Test that connection against access, competing substitutes, different buyers or budgets, and integration costs. Count expansion only if its scoped offer clears launch risk and has evidence supporting the commercial path.
+- **Commercial expansion.** Name the next paid workflow, product, or segment and identify its buyer, budget, and channel. Show how it materially improves price, frequency, or volume and what the first sale provides that helps win it. Test that connection against buyer access, differences in purchase authority or budgets, and adoption and integration costs. Count expansion only if its scoped offer clears launch risk and has evidence supporting the commercial path.
 
 ## Eligibility and disposition
 
-A scoped offer is eligible for **paid validation** when both gates pass and the notes support all four requirements.
+A scoped offer is eligible for **paid validation** when it meets any explicit restrictions in the current brief, both gates pass, and the notes support all three requirements.
 
 1. A buyer-side account of a real attempt, workaround, or decision to go without in the launch segment with a material consequence.
 2. A channel that can reach the payer and any separate user, with a route to representative samples that can be used with permission.
-3. A documented shortcoming of the best accessible substitute on a buyer priority. A direct comparison may be part of the first test when the existing evidence makes the gap credible and the comparison can disprove it.
-4. A priced offer tied to observed spending or evidenced net value. Mark willingness to pay for the proposed offer unknown until there is direct evidence and test it with a paid commitment.
+3. A priced offer tied to observed spending or evidenced net value. Mark willingness to pay for the proposed offer unknown until there is direct evidence and test it with a paid commitment.
 
-Recommend **production development** only after validation eligibility and evidence of acceptable quality and material gains over both current behavior and the strongest practical substitute on representative cases. Require paid purchases, pilots, prepayments, or signed paid commitments for the scoped offer at a sustainable price. Verify what repeats across independent buyers, acquisition attempts, and representative cases, including review, exceptions, and support. One paid pilot establishes one sale. Compare observed acquisition and delivery with the volume and capacity needed. If the build depends on expansion, require direct evidence from the relevant payers that the first sale opens that path. Scope development to the evidence.
+Recommend **production development** only after validation eligibility and demonstrations of acceptable quality and material gains against the buyer's actual workflow baseline on representative cases. Require paid purchases, pilots, prepayments, or signed paid commitments for the scoped offer at a sustainable price. Require evidence that acquisition and delivery repeat across independent buyers, acquisition attempts, and representative cases, including review, exceptions, and support. One paid pilot establishes one sale. Compare observed acquisition and delivery with the volume and capacity needed. If the build depends on expansion, require direct evidence from the relevant payers that the first sale opens that path. Scope development to the evidence.
 
-- **Drop** when a gate fails, a practical substitute is good enough, or buyers can cheaply tolerate the remaining pain. Record the decisive evidence.
+- **Drop** when a gate fails or the offer falls outside an explicit restriction in the current brief. Record the decisive evidence.
 - **Watchlist** when a credible lead has a decision-critical unknown or missing validation requirement. Name the cheapest check and the result that would change the disposition.
-- **Validate** when both gates and all paid validation requirements are met. Design the cheapest decisive test of what could make the offer commercially unviable.
+- **Validate** when the offer is eligible for paid validation. Design the cheapest decisive test of what could make the offer commercially unviable.
 - **Build** when the production bar is also met.
 
 ## Comparison and confidence
@@ -45,10 +44,11 @@ For shortlisted offers, rate the dimensions separately and give the evidence con
 
 | Dimension | Strong | Moderate | Weak |
 | --- | --- | --- | --- |
-| Effective competitive gap | The best accessible substitute leaves a substantial barrier on a buyer priority | It covers most of the job but leaves a meaningful burden for this segment | A practical option is good enough or the remaining burden is cheap to tolerate |
 | Transformation potential | The offer unlocks an outcome buyers routinely forego or materially changes its cost, speed, or quality | It materially improves one step with limited effect on the broader workflow | Setup, review, and rework leave a marginal improvement |
 | Demand | Eligible buyers repeatedly spend money or substantial effort to get the outcome | A costly workaround, abandonment, or adjacent spend is documented, with limited evidence of frequency or budget | Buyers show little reason to commit resources |
 
-Confidence is **high** for sufficient direct evidence in scope, **medium** for relevant evidence with material limits, **low** for indirect or weakly verified evidence, and **unknown** when evidence is missing. A single verified purchase establishes willingness to pay in that case. Prevalence and repeat demand require wider evidence. An empty search provides little evidence of a gap.
+Confidence is **high** for sufficient direct evidence in scope, **medium** for relevant evidence with material limits, **low** for indirect or weakly verified evidence, and **unknown** when evidence is missing. A single verified purchase establishes willingness to pay in that case. Prevalence and repeat demand require wider evidence.
 
-Rank only eligible offers by reachable commercial upside, buyer value, and delivery feasibility. Consider access to users, samples, and expertise, plus verification, exceptions, onboarding, support, repeatability, and defensibility. For comparable offers, favor the cheaper, more decisive next test. Either eligibility decision can yield zero offers.
+Use competitor evidence when it supports a concrete finding about price, demand, access, or switching costs. For example, repeated refusals by reachable buyers who already receive the service can lower the paid conversion estimate. Vendor counts, free tiers, and an unknown competitive gap carry no independent penalty. An absence of known competitors provides no buyer evidence.
+
+Rank only eligible offers by buyer value, reachable paid demand, and delivery feasibility. Consider access to users, samples, and expertise, plus verification, exceptions, onboarding, support, and repeatability. For comparable offers, favor the cheaper, more decisive next test. Either eligibility decision can yield zero offers.
